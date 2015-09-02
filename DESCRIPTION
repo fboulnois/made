@@ -1,0 +1,26 @@
+Package: made
+Type: Package
+Title: Microarray Analysis of Differential Expression
+Version: 0.0.1
+Date: 2015-07-28
+Author: FB [cre,aut]
+Maintainer: FB <fboulnois@mgh.harvard.edu>
+Description: Simple, reproducible pipeline for the analysis of microarray differential expression.
+License:  GPL-2
+LazyData: TRUE
+Depends: R (>= 3.2.0)
+Imports:
+  affyio,
+  AnnotationDbi,
+  Biobase,
+  limma,
+  oligo,
+  oligoClasses,
+  parallel,
+  rmarkdown,
+  stringr,
+  sva,
+  yaml
+Suggests:
+  GO.db,
+  KEGGREST
