@@ -106,7 +106,7 @@
   output.table <- function(tableList, tableNames, outputDir)
   {
     # Remove garbage characters
-    tableFileName <- paste0(gsub("[^[:alnum:]]","", tableNames), ".csv")
+    tableFileName <- paste0(gsub("[^[:alnum:]-]","", tableNames), ".csv")
     write.csv(tableList, file.path(outputDir, tableFileName), row.names = FALSE, na = "")
     return(NULL)
   }
