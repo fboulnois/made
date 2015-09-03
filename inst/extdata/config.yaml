@@ -1,0 +1,12 @@
+global_options:
+  pvalue: 0.05
+  save_intermediates: no
+pipeline:
+  quality_assessment: yes
+  normalization: rma
+  summarization: yes
+  write_report: yes
+groups:
+  group_by: dirs
+  group_file: groups.txt
+  contrast_groups: B-A, C-A, C-B

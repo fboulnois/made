@@ -1,0 +1,79 @@
+---
+title:  'Microarray Analysis of Differential Expression Report'
+author: '`r Sys.info()[["effective_user"]]`'
+date:   '`r format(Sys.time(), "%d %B, %Y")`'
+output:
+  html_document:
+    toc: true
+---
+
+```{r init, echo=FALSE}
+# Set global report options
+knitr::opts_chunk$set(echo=FALSE)
+options(width=120)
+
+# Check for GO.db and KEGG
+godbExists <- requireNamespace("GO.db", quietly = TRUE)
+keggExists <- requireNamespace("KEGGREST", quietly = TRUE)
+
+# Define some useful functions
+topGenes <- function(tt)
+{
+  genes <- unique(tt[,c("SYMBOL","logFC","CI.L","CI.R","adj.P.Val")])[1:50,]
+  print(genes, digits = 3, row.names = FALSE)
+}
+
+doGO <- function(tt)
+{
+  goid <- limma::topGO(limma::goana(unique(tt$ENTREZID[tt$DE])))
+  print(goid, digits = 3)
+}
+
+doKEGG <- function(tt)
+{
+  kegg <- limma::topKEGG(limma::kegga(unique(tt$ENTREZID[tt$DE])))
+  print(kegg, digits = 3)
+}
+```
+
+# Introduction
+```{r callerargs, dev='png'}
+```
+
+# Quality Assessment
+
+```{r logdistv, dev='png'}
+oligo::hist(eset, main = "Log-intensity values distribution", bg="transparent")
+heatmap(Biobase::exprs(eset)[1:10,1:10])
+```
+
+# Normalization
+
+# Summarization
+```{r toptable}
+invisible(lapply(tf, topGenes))
+```
+
+# Pathway analysis
+
+`r if(godbExists){ "## Gene Ontology term enrichment" }`
+```{r goterms}
+if(godbExists)
+{
+  invisible(lapply(tf, doGO))
+}
+```
+
+`r if(keggExists){ "## KEGG pathway enrichment" }`
+```{r kegg}
+if(keggExists)
+{
+  invisible(lapply(tf, doKEGG))
+}
+```
+
+# Other information
+
+```{r sessioninfo}
+sessionInfo()
+```
