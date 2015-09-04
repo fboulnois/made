@@ -67,7 +67,7 @@ read.yaml.config <- function(config, checkGroups = TRUE, getGroups = TRUE)
   is.probability <- function(param, error = TRUE)
   {
     return(cerr(not.null(param) && length(param) == 1 &&
-                is.double(param) && param >= 0 && param <= 1, param, "a number between 0 and 1", error))
+                  is.double(param) && param >= 0 && param <= 1, param, "a number between 0 and 1", error))
   }
 
   is.single.string <- function(param, error = TRUE)

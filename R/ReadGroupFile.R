@@ -81,13 +81,13 @@ read.group.file <- function(config)
     colnames(dmx) <- stringr::str_replace_all(colnames(dmx), "Group", "")
 
     cmx <- tryCatch(
-    {
-      do.call(limma::makeContrasts, c(as.list(cnlFormulas), list(levels = as.factor(df$Group))))
-    }, error = function(e)
-    {
-      badFormulasTxt <- paste0("'", cnlFormulas, "'", collapse = ", ")
-      stop(sprintf("One or more of the following contrast groups in the file 'config.yaml' are not valid: %s.", badFormulasTxt))
-    })
+      {
+        do.call(limma::makeContrasts, c(as.list(cnlFormulas), list(levels = as.factor(df$Group))))
+      }, error = function(e)
+      {
+        badFormulasTxt <- paste0("'", cnlFormulas, "'", collapse = ", ")
+        stop(sprintf("One or more of the following contrast groups in the file 'config.yaml' are not valid: %s.", badFormulasTxt))
+      })
 
     return(list(design.matrix = dmx, contrast.matrix = cmx))
   }
