@@ -1,8 +1,8 @@
 ma.pipeline <- function(config)
 {
   config <- read.yaml.config(config)
-
-  if(config$pipeline$normalization)
+  
+  if(is.character(config$pipeline$normalization) || config$pipeline$normalization)
   {
     eset <- ma.normalize(config)
   }
