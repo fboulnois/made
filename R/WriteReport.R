@@ -13,6 +13,6 @@ write.report <- function(config, eset, tf)
   }
 
   infile  <- normalizePath(system.file("extdata", "report.rmd", package = "made"), mustWork = TRUE)
-  outfile <- normalizePath(file.path(dirname(config$groups$group_file), "microarray_report.html"), mustWork = FALSE)
+  outfile <- normalizePath(file.path(dirname(config$groups$group_file), sprintf("%s_microarray_report.html", .timestamped())), mustWork = FALSE)
   rmarkdown::render(input = infile, output_file = outfile)
 }
