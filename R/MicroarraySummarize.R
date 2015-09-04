@@ -53,7 +53,7 @@ ma.summarize <- function(config, eset)
     modf <- groupData$design.matrix
     mod0 <- model.matrix(~1, groupData$groups)
 
-    sva1 <- sva::sva(Biobase::exprs(eset), modf, mod0)
+    sva1 <- .gc.wrapper(sva::sva, Biobase::exprs(eset), modf, mod0)
     modSVs <- cbind(modf, sva1$sv)
     cat("\n")
 
