@@ -29,7 +29,7 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
   {
     validOpts <- c("pvalue", "save.intermediates",
                    "quality.assessment", "normalization", "summarization", "write.report",
-                   "group.file", "contrast.groups", "eset")
+                   "group.file", "contrast.groups", "eset", "groups.df")
 
     pos <- is.element(names(opts), validOpts)
     if(!all(pos))
@@ -149,8 +149,15 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
                    groupBy, groupType, analysisDir))
     }
 
-    df <- setNames(data.frame(suppressWarnings(cbind(LETTERS[1:min(length(groupList),3)], groupList, basename(groupList)))),
-                   c("Group", middleCol, "description"))
+    if(!is.null(opts$groups.df))
+    {
+      df <- opts$groups.df
+    }
+    else
+    {
+      df <- setNames(data.frame(suppressWarnings(cbind(LETTERS[1:min(length(groupList),3)], groupList, basename(groupList)))),
+                     c("Group", middleCol, "description"))
+    }
 
     return(list(header = get.full.header(groupType), df = df))
   }
