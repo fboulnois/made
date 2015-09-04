@@ -1,4 +1,4 @@
-ma.summarize <- function(eset, config)
+ma.summarize <- function(config, eset)
 {
   stopifnot(class(eset) == "ExpressionSet")
   config <- read.yaml.config(config)
