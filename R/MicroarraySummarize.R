@@ -43,10 +43,10 @@ ma.summarize <- function(config, eset)
   }
 
   # Adjust for surrogate variables (biological and non-biological variability)
-  sva.estimate <- function(eset, data)
+  sva.estimate <- function(eset, groupData)
   {
-    modf <- data$design.matrix
-    mod0 <- model.matrix(~1, data$groups)
+    modf <- groupData$design.matrix
+    mod0 <- model.matrix(~1, groupData$groups)
 
     sva1 <- sva::sva(Biobase::exprs(eset), modf, mod0)
     modSVs <- cbind(modf, sva1$sv)
