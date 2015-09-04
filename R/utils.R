@@ -1,4 +1,3 @@
-# Try to load file if it exists otherwise perform function call
 # Perform gc() after expensive load or function call
 .gc.wrapper <- function(func, ...)
 {
