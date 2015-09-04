@@ -45,6 +45,11 @@ ma.summarize <- function(config, eset)
   # Adjust for surrogate variables (biological and non-biological variability)
   sva.estimate <- function(eset, groupData)
   {
+    if(ncol(eset) != nrow(groupData$design.matrix))
+    {
+      stop("Number of samples in the expression set do not match those in the experimental design.")
+    }
+
     modf <- groupData$design.matrix
     mod0 <- model.matrix(~1, groupData$groups)
 
