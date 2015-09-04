@@ -1,4 +1,4 @@
-render.report <- function(config, eset, tf)
+write.report <- function(config, eset, tf)
 {
   config <- read.yaml.config(config)
 
