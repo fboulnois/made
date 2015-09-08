@@ -112,3 +112,35 @@
 
   mapply(output.table, tableList = tableList, tableNames = names(tableList), outputDir = outputDir)
 }
+
+# Load package and dependencies silently
+.silentLoad <- function(package)
+{
+  loadPackage <- function(package)
+  {
+    # Code below based on 'library' function code
+    libDirs <- .libPaths()
+    libDirs <- libDirs[dir.exists(libDirs)]
+
+    pkgPath <- find.package(package, libDirs, quiet = TRUE)
+    pkgDir  <- normalizePath(dirname(pkgPath), "/", TRUE)
+    pkgInfo <- readRDS(system.file("Meta", "package.rds", package = package, lib.loc = pkgDir))
+
+    .getRequiredPackages2(pkgInfo, quietly = TRUE)
+    pkgDeps <- unique(names(pkgInfo$Depends))
+
+    success <- tryCatch(
+      {
+        ns  <- loadNamespace(package, c(pkgDir, libDirs))
+        env <- attachNamespace(ns, depends = pkgDeps)
+        return(TRUE)
+      }, error = function(e)
+      {
+        return(FALSE)
+      })
+
+    return(success)
+  }
+
+  return(suppressMessages(loadPackage(package)))
+}

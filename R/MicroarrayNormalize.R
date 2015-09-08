@@ -69,8 +69,8 @@ ma.normalize <- function(config)
   # Enable multicore analysis
   Sys.setenv(R_THREADS=parallel::detectCores())
 
-  # Ugly hack, need to load 'oligo' silently to suppress package outputs
-  suppressMessages(require(package = oligo, quietly = TRUE))
+  # Suppress 'oligo' package diagnostics so that function output when reading samples isn't clobbered
+  .silentLoad("oligo")
 
   load.chip.libs(check.cel.headers(config$data$groups$sample.file))
 
