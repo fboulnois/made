@@ -7,9 +7,9 @@ ma.summarize <- function(config, eset)
   do.log2 <- function(eset)
   {
     curExprs <- Biobase::exprs(eset)
-    qvals <- as.numeric(quantile(curExprs, c(0.00, 0.25, 0.50, 0.75, 0.99, 1.0), na.rm=TRUE))
+    qvals <- as.numeric(quantile(curExprs, c(0.00, 0.25, 0.50, 0.75, 0.99, 1.0), na.rm = TRUE))
     # Check whether or not data is log-transformed
-    notLog <- (qvals[5] > 100) || (qvals[6]-qvals[1] > 50 && qvals[2] > 0) || (qvals[2] > 0 && qvals[2] < 1 && qvals[4] > 1 && qvals[4] < 2)
+    notLog <- (qvals[5] > 100) || (qvals[6] - qvals[1] > 50 && qvals[2] > 0) || (qvals[2] > 0 && qvals[2] < 1 && qvals[4] > 1 && qvals[4] < 2)
     if(notLog)
     {
       warning("Expression set is not log-transformed.")
@@ -33,7 +33,7 @@ ma.summarize <- function(config, eset)
 
     # Check that probes indicated in the eset are similar to those in the annotation database
     hgdb <- get(annotationPkg)
-    hsel <- AnnotationDbi::select(hgdb, keys=AnnotationDbi::keys(hgdb), columns = c("PROBEID","ENTREZID","GENENAME","SYMBOL","UNIPROT"))
+    hsel <- AnnotationDbi::select(hgdb, keys = AnnotationDbi::keys(hgdb), columns = c("PROBEID","ENTREZID","GENENAME","SYMBOL","UNIPROT"))
     if(length(setdiff(Biobase::featureNames(eset),hsel$PROBEID)) > 0)
     {
       stop("Expression set features must be probe sets.")
@@ -81,7 +81,7 @@ ma.summarize <- function(config, eset)
 
       # Merge annotation database with differentially expressed probe sets, remove unknown probe sets
       tt$PROBEID <- row.names(tt)
-      tt <- merge(tt, dbData, by="PROBEID")
+      tt <- merge(tt, dbData, by = "PROBEID")
       tt <- tt[!is.na(tt$ENTREZID), ]
       tt <- tt[ order(tt$P.Value) , ]
 

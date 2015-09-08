@@ -132,7 +132,7 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
     else if(groupBy == "files")
     {
       groupList <- list.files(analysisDir, full.names = FALSE, pattern = "*.cel(.gz)?$",
-                              recursive = TRUE, ignore.case=TRUE)
+                              recursive = TRUE, ignore.case = TRUE)
       groupType <- "file"
       middleCol <- "sample.file"
     }

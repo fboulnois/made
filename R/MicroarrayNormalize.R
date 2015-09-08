@@ -67,7 +67,7 @@ ma.normalize <- function(config)
   }
 
   # Enable multicore analysis
-  Sys.setenv(R_THREADS=parallel::detectCores())
+  Sys.setenv(R_THREADS = parallel::detectCores())
 
   # Suppress 'oligo' package diagnostics so that function output when reading samples isn't clobbered
   .silentLoad("oligo")

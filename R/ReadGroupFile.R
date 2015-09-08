@@ -44,7 +44,7 @@ read.group.file <- function(config)
   get.dir.groups <- function(df)
   {
     celFiles <- list.files(path = dirname(attr(df, ".filename")), pattern = "*.cel(.gz)?$",
-                           full.names = TRUE, recursive = TRUE, ignore.case=TRUE)
+                           full.names = TRUE, recursive = TRUE, ignore.case = TRUE)
     parentDirs <- basename(dirname(celFiles))
 
     pos <- match(parentDirs, df$sample.dir)
