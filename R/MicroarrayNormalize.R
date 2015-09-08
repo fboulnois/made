@@ -60,12 +60,6 @@ ma.normalize <- function(config)
     return(eset)
   }
 
-  # Normalize the name of a file in a path
-  normalize.filename <- function(path, filename)
-  {
-    return(normalizePath(file.path(path, filename), mustWork = FALSE))
-  }
-
   # Enable multicore analysis
   Sys.setenv(R_THREADS = parallel::detectCores())
 
