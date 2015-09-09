@@ -1,3 +1,30 @@
+#' Read group file
+#'
+#' Read and validate the group file associated with a microarray experiment.
+#'
+#' \strong{Note}: This function is mostly for internal use. Users should use
+#' \code{read.yaml.config} instead because it calls this function by default.
+#'
+#' The group file describes which samples belong to which groups or conditions,
+#' for example normal controls and experimental cases. Groups must be assigned
+#' prior to launching the analysis. Groups are compared according to the option
+#' \code{contrast_groups} in the configuration and can be defined at three
+#' different levels:
+#'
+#' \describe{
+#'    \item{\code{"dirs" }}{Each directory containing samples can be assigned a group}
+#'    \item{\code{"files"}}{Each individual sample can be assigned a group}
+#'    \item{\code{"eset" }}{Each sample specified in an expression set can be assigned a group}
+#' }
+#'
+#' @param config Character string consisting of the path to the configuration
+#' file generated using the \code{write.yaml.config} function or parsed
+#' configuration list associated with a microarray experiment.
+#'
+#' @return Returns a modified configuration with group data.
+#'
+#' @seealso \code{\link{write.yaml.config}} to generate the configuration file
+#' and \code{\link{read.yaml.config}} to read and validate it.
 read.group.file <- function(config)
 {
   config <- read.yaml.config(config, getGroups = FALSE)
