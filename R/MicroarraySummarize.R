@@ -1,3 +1,37 @@
+#' Microarray summarization
+#'
+#' Summarize a microarray experiment at the level of genes.
+#'
+#' Transforms an expression set (eset) which describes the microarray experiment
+#' data at the probe level into a list of genes and their associated log-fold
+#' changes and statistical values. The statistical values include the p-values,
+#' the False Discovery Rate (FDR) adjusted p-values (q-values), and the 95\%
+#' confidence intervals for the log-fold change. Expression sets which are not
+#' log-transformed are log-transformed for the purpose of this function.
+#' Batch effect is adjusted using Surrogate Variable Analysis (SVA) and
+#' gene-level summarization is assessed using the empirical Bayes function from
+#' the \code{limma} package.
+#'
+#' @param config Character string consisting of the path to the configuration
+#' file generated using the \code{write.yaml.config} function or parsed
+#' configuration list associated with a microarray experiment.
+#'
+#' @param eset Expression set object describing microarray experiment at the
+#' level of probes.
+#'
+#' @references Benjamini, Yoav, and Yosef Hochberg. "Controlling the false
+#' discovery rate: a practical and powerful approach to multiple testing."
+#' \emph{Journal of the Royal Statistical Society}. Series B (Methodological)
+#' (1995): 289-300.
+#'
+#' Leek, Jeffrey T., and John D. Storey. "Capturing heterogeneity in gene
+#' expression studies by surrogate variable analysis." \emph{PLoS Genet} 3, no.
+#' 9 (2007): 1724-1735.
+#'
+#' Ritchie, Matthew E., Belinda Phipson, Di Wu, Yifang Hu, Charity W. Law, Wei
+#' Shi, and Gordon K. Smyth. "limma powers differential expression analyses for
+#' RNA-sequencing and microarray studies." \emph{Nucleic acids research} (2015):
+#' gkv007.
 ma.summarize <- function(config, eset)
 {
   stopifnot(class(eset) == "ExpressionSet")
