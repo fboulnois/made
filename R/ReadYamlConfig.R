@@ -12,7 +12,7 @@
 #' @param checkGroups logical indicating whether the group file must exist when
 #' doing the validation.
 #'
-#' @param getGroups logical indicating whether the data in the groups file must
+#' @param getGroups logical indicating whether the data in the group file must
 #' also be validated and returned in the configuration.
 #'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file

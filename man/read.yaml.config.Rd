@@ -14,7 +14,7 @@ configuration list associated with a microarray experiment.}
 \item{checkGroups}{logical indicating whether the group file must exist when
 doing the validation.}
 
-\item{getGroups}{logical indicating whether the data in the groups file must
+\item{getGroups}{logical indicating whether the data in the group file must
 also be validated and returned in the configuration.}
 }
 \description{
