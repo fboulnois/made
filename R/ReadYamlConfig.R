@@ -1,3 +1,22 @@
+#' Read YAML config
+#'
+#' Read and validate the configuration associated with a microarray experiment.
+#'
+#' Each configuration option is checked for incongruities, including whether or
+#' not it is missing, its type, and its value.
+#'
+#' @param config Character string consisting of the path to the configuration
+#' file generated using the \code{write.yaml.config} function or parsed
+#' configuration list associated with a microarray experiment.
+#'
+#' @param checkGroups logical indicating whether the group file must exist when
+#' doing the validation.
+#'
+#' @param getGroups logical indicating whether the data in the groups file must
+#' also be validated and returned in the configuration.
+#'
+#' @seealso \code{\link{write.yaml.config}} to generate the configuration file
+#' and \code{\link{read.group.file}} to read and validate the group file.
 read.yaml.config <- function(config, checkGroups = TRUE, getGroups = TRUE)
 {
   # If YAML has already been validated avoid further processing
