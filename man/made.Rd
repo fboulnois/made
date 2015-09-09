@@ -6,7 +6,7 @@
 \alias{made-package}
 \title{made: A package for the reproducible analysis of microarray data.}
 \description{
-The \code{\strong{made}} package provides tools for the reproducible analysis
+The \strong{\code{made}} package provides tools for the reproducible analysis
 of oligonucleotide arrays using a simple, clear, and consistent interface.
 }
 \details{

@@ -1,6 +1,6 @@
 #' made: A package for the reproducible analysis of microarray data.
 #'
-#' The \code{\strong{made}} package provides tools for the reproducible analysis
+#' The \strong{\code{made}} package provides tools for the reproducible analysis
 #' of oligonucleotide arrays using a simple, clear, and consistent interface.
 #'
 #' A user should first specify the options they require and the groups or
