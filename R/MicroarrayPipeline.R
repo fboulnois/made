@@ -13,7 +13,7 @@
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file,
 #' \code{\link{ma.normalize}} to perform normalization,
 #' \code{\link{ma.summarize}} to perform gene level summarization, and
-#' \code{\link{write.report}} to create the final report including the quality
+#' \code{\link{write.report}} to generate the final report including the quality
 #' assessment.
 ma.pipeline <- function(config)
 {
