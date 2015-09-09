@@ -70,7 +70,7 @@ ma.summarize <- function(config, eset)
 
     # Check that probes indicated in the eset are similar to those in the annotation database
     hgdb <- get(annotationPkg)
-    hsel <- AnnotationDbi::select(hgdb, keys = AnnotationDbi::keys(hgdb), columns = c("PROBEID","ENTREZID","GENENAME","SYMBOL","UNIPROT"))
+    hsel <- AnnotationDbi::select(hgdb, keys = AnnotationDbi::keys(hgdb), columns = c("PROBEID","ENTREZID","GENENAME","SYMBOL"))
     if(length(setdiff(Biobase::featureNames(eset),hsel$PROBEID)) > 0)
     {
       stop("Expression set features must be probe sets.")
