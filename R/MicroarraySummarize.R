@@ -75,7 +75,7 @@ ma.summarize <- function(config, eset)
       tt  <- limma::topTable(fit, coef = i, n = Inf, adjust.method = "BH", confint = TRUE)
 
       # Check which probe sets are differentially expressed or have significant log-fold change
-      tt$DE <- tt$adj.P.Val < config$global_options$pvalue
+      tt$DE <- tt$adj.P.Val < config$global_options$qvalue
       thresholdFC <- mean(tt$logFC) + 2*sd(tt$logFC)
       tt$sigFC <- abs(tt$logFC) > thresholdFC
 

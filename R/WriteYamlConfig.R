@@ -27,7 +27,7 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
   # Verify that the other specified options are valid and update the config if necessary
   check.other.opts <- function(groupBy, opts)
   {
-    validOpts <- c("pvalue", "save.intermediates",
+    validOpts <- c("qvalue", "save.intermediates",
                    "quality.assessment", "normalization", "summarization", "write.report",
                    "group.file", "contrast.groups", "eset", "groups.df")
 
@@ -42,9 +42,9 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
     config <- normalizePath(system.file("extdata", "config.yaml", package = "made"), mustWork = TRUE)
     config <- yaml::yaml.load_file(config)
 
-    if(!is.null(opts$pvalue))
+    if(!is.null(opts$qvalue))
     {
-      config$global_options$pvalue <- opts$pvalue
+      config$global_options$qvalue <- opts$qvalue
     }
 
     if(!is.null(opts$save.intermediates))

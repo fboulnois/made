@@ -1,5 +1,5 @@
 global_options:
-  pvalue: 0.05
+  qvalue: 0.05
   save_intermediates: no
 pipeline:
   quality_assessment: yes

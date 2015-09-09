@@ -96,7 +96,7 @@ read.yaml.config <- function(config, checkGroups = TRUE, getGroups = TRUE)
   check.goptions <- function(config)
   {
     not.null(config$global_options)
-    is.probability(config$global_options$pvalue)
+    is.probability(config$global_options$qvalue)
     is.single.logical(config$global_options$save_intermediates)
   }
 
