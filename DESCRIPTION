@@ -24,3 +24,20 @@ Imports:
 Suggests:
   GO.db,
   KEGGREST
+biocViews:
+  BatchEffect,
+  DataImport,
+  DifferentialExpression,
+  ExonArray,
+  GeneExpression,
+  GeneSetEnrichment,
+  Genetics,
+  Microarray,
+  mRNAMicroarray,
+  MultipleComparison,
+  Normalization,
+  OneChannel,
+  Preprocessing,
+  ProprietaryPlatforms,
+  QualityControl,
+  TwoChannel
