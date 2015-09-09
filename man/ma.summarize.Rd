@@ -14,6 +14,10 @@ configuration list associated with a microarray experiment.}
 \item{eset}{Expression set object describing microarray experiment at the
 level of probes.}
 }
+\value{
+A list of top tables for each comparison of interest and their genes,
+associated log-fold changes, and statistical values.
+}
 \description{
 Summarize a microarray experiment at the level of genes.
 }

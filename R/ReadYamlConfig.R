@@ -15,6 +15,10 @@
 #' @param getGroups logical indicating whether the data in the group file must
 #' also be validated and returned in the configuration.
 #'
+#' @return A list of the configuration options. If the configuration has been
+#' fully validated including the group file, the class of the resulting
+#' configuration becomes \code{MadeConfig}.
+#'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file
 #' and \code{\link{read.group.file}} to read and validate the group file.
 read.yaml.config <- function(config, checkGroups = TRUE, getGroups = TRUE)

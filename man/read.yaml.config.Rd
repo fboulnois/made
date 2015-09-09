@@ -17,6 +17,11 @@ doing the validation.}
 \item{getGroups}{logical indicating whether the data in the group file must
 also be validated and returned in the configuration.}
 }
+\value{
+A list of the configuration options. If the configuration has been
+fully validated including the group file, the class of the resulting
+configuration becomes \code{MadeConfig}.
+}
 \description{
 Read and validate the configuration associated with a microarray experiment.
 }

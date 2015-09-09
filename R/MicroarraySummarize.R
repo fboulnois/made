@@ -19,6 +19,9 @@
 #' @param eset Expression set object describing microarray experiment at the
 #' level of probes.
 #'
+#' @return A list of top tables for each comparison of interest and their genes,
+#' associated log-fold changes, and statistical values.
+#'
 #' @references Benjamini, Yoav, and Yosef Hochberg. "Controlling the false
 #' discovery rate: a practical and powerful approach to multiple testing."
 #' \emph{Journal of the Royal Statistical Society}. Series B (Methodological)
