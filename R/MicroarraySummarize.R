@@ -109,7 +109,7 @@ ma.summarize <- function(config, eset)
       cat(sprintf("Contrasting %s.\n", colnames(cmx)[i]))
 
       fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
-      tt  <- limma::topTable(fit, coef = i, n = Inf, adjust.method = "BH", confint = TRUE)
+      tt  <- limma::topTable(fit, coef = i, number = Inf, adjust.method = "BH", confint = TRUE)
 
       # Check which probe sets are differentially expressed or have significant log-fold change
       tt$DE <- tt$adj.P.Val < config$global_options$qvalue
