@@ -13,8 +13,8 @@
 #' @param eset Expression set object describing microarray experiment at the
 #' level of probes.
 #'
-#' @param tf List of top tables for each comparison of interest and their genes,
-#' associated log-fold changes, and statistical values.
+#' @param tf A list of top tables for each comparison of interest and their
+#' genes, associated log-fold changes, and statistical values.
 write.report <- function(config, eset, tf)
 {
   config <- read.yaml.config(config)
