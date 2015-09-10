@@ -35,5 +35,16 @@ write.report <- function(config, eset, tf)
 
   infile  <- normalizePath(system.file("extdata", "report.rmd", package = "made"), mustWork = TRUE)
   outfile <- normalizePath(file.path(dirname(config$groups$group_file), sprintf("%s_microarray_report.html", .timestamped())), mustWork = FALSE)
-  rmarkdown::render(input = infile, output_file = outfile)
+
+  tryCatch({
+    rmarkdown::render(input = infile, output_file = outfile)
+  }, error = function(e)
+  {
+    emsg <- e$message
+    if(grepl("pandoc .* not found", emsg))
+    {
+      emsg <- paste(emsg, "Download it from https://github.com/jgm/pandoc/releases")
+    }
+    stop(emsg)
+  })
 }
