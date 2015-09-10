@@ -15,6 +15,8 @@
 #' \code{\link{ma.summarize}} to perform gene level summarization, and
 #' \code{\link{write.report}} to generate the final report including the quality
 #' assessment.
+#'
+#' @export
 ma.pipeline <- function(config)
 {
   config <- read.yaml.config(config)

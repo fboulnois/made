@@ -30,6 +30,12 @@
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file,
 #' and \code{\link{ma.summarize}} to convert an expression set object into a
 #' list of genes and their associated log-fold changes and statistical values.
+#'
+#' @importFrom affyio read.celfile.header
+#' @importFrom oligo read.celfiles rma
+#' @importFrom parallel detectCores
+#'
+#' @export
 ma.normalize <- function(config)
 {
   config <- read.yaml.config(config)

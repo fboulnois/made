@@ -35,6 +35,13 @@
 #' Shi, and Gordon K. Smyth. "limma powers differential expression analyses for
 #' RNA-sequencing and microarray studies." \emph{Nucleic acids research} (2015):
 #' gkv007.
+#'
+#' @importFrom AnnotationDbi keys select
+#' @importFrom Biobase annotation exprs featureNames
+#' @importFrom limma contrasts.fit eBayes lmFit topTable
+#' @importFrom sva sva
+#'
+#' @export
 ma.summarize <- function(config, eset)
 {
   stopifnot(class(eset) == "ExpressionSet")

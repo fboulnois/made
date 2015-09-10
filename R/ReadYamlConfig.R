@@ -21,6 +21,10 @@
 #'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file
 #' and \code{\link{read.group.file}} to read and validate the group file.
+#'
+#' @import yaml
+#'
+#' @export
 read.yaml.config <- function(config, checkGroups = TRUE, getGroups = TRUE)
 {
   # If YAML has already been validated avoid further processing

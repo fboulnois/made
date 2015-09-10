@@ -71,6 +71,11 @@
 #'
 #' @seealso \code{\link{read.yaml.config}} to read and validate the
 #' configuration.
+#'
+#' @import yaml
+#' @importFrom Biobase sampleNames
+#'
+#' @export
 write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
 {
   # Verify analysis directory and create it if it doesn't exist

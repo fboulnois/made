@@ -27,6 +27,11 @@
 #'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file
 #' and \code{\link{read.yaml.config}} to read and validate it.
+#'
+#' @importFrom limma makeContrasts
+#' @importFrom stringr str_extract_all str_replace_all str_split str_trim
+#'
+#' @export
 read.group.file <- function(config)
 {
   config <- read.yaml.config(config, getGroups = FALSE)

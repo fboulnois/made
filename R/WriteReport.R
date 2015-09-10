@@ -15,6 +15,10 @@
 #'
 #' @param tf A list of top tables for each comparison of interest and their
 #' genes, associated log-fold changes, and statistical values.
+#'
+#' @importFrom rmarkdown render
+#'
+#' @export
 write.report <- function(config, eset, tf)
 {
   config <- read.yaml.config(config)
