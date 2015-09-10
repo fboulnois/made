@@ -19,7 +19,7 @@ functions such as normalization using \code{\link{ma.normalize}}, gene level
 summarization using \code{\link{ma.summarize}}, and generating a high-quality
 report using \code{\link{write.report}}, including quality assessment if
 desired. Other functions can be used to read and write various files required
-by the analysis programatically. Reading the configuration or group file can
+by the analysis programmatically. Reading the configuration or group file can
 be accomplished using the functions \code{\link{read.yaml.config}} and
 \code{\link{read.group.file}} respectively, while writing the configuration
 file can be accomplished using the function \code{\link{write.yaml.config}}.
