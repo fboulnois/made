@@ -28,10 +28,12 @@ prior to launching the analysis. Groups are compared according to the option
 different levels:
 
 \describe{
-   \item{\code{"dirs" }}{Each directory containing samples can be assigned a group}
-   \item{\code{"files"}}{Each individual sample can be assigned a group}
-   \item{\code{"eset" }}{Each sample specified in an expression set can be assigned a group}
-}
+   \item{\code{"dirs" }}{Each directory containing samples can be assigned a
+   group.}
+   \item{\code{"files"}}{Each individual sample can be assigned a group.}
+   \item{\code{"eset" }}{Each sample specified in an expression set can be
+   assigned a group.}
+ }
 }
 \seealso{
 \code{\link{write.yaml.config}} to generate the configuration file

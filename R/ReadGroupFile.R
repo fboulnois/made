@@ -11,11 +11,13 @@
 #' \code{contrast_groups} in the configuration and can be defined at three
 #' different levels:
 #'
-#' \describe{
-#'    \item{\code{"dirs" }}{Each directory containing samples can be assigned a group}
-#'    \item{\code{"files"}}{Each individual sample can be assigned a group}
-#'    \item{\code{"eset" }}{Each sample specified in an expression set can be assigned a group}
-#' }
+#'  \describe{
+#'    \item{\code{"dirs" }}{Each directory containing samples can be assigned a
+#'    group.}
+#'    \item{\code{"files"}}{Each individual sample can be assigned a group.}
+#'    \item{\code{"eset" }}{Each sample specified in an expression set can be
+#'    assigned a group.}
+#'  }
 #'
 #' @param config Character string consisting of the path to the configuration
 #' file generated using the \code{write.yaml.config} function or parsed
