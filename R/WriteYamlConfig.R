@@ -190,7 +190,7 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
       stop("Parameter groupBy = 'eset' was specified but a valid expression set was not passed to function.")
     }
 
-    return(oligoClasses::sampleNames(eset))
+    return(Biobase::sampleNames(eset))
   }
 
   # Based on whether groupBy = "dirs", "files", or "eset" take different actions

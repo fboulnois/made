@@ -15,7 +15,6 @@ Imports:
   Biobase,
   limma,
   oligo,
-  oligoClasses,
   parallel,
   rmarkdown,
   stringr,
