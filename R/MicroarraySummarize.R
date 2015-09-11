@@ -118,10 +118,9 @@ ma.summarize <- function(config, eset)
       fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
       tt  <- limma::topTable(fit, coef = i, number = Inf, adjust.method = "BH", confint = TRUE)
 
-      # Check which probe sets are differentially expressed or have significant log-fold change
+      # Check which probe sets are differentially expressed or have large log-fold change
       tt$DE <- tt$adj.P.Val < config$global_options$qvalue
-      thresholdFC <- mean(tt$logFC) + 2*sd(tt$logFC)
-      tt$sigFC <- abs(tt$logFC) > thresholdFC
+      tt$sigFC <- abs(tt$logFC) > log2(1.5)
 
       # Merge annotation database with differentially expressed probe sets, remove unknown probe sets
       tt$PROBEID <- row.names(tt)
