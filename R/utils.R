@@ -88,6 +88,16 @@
   return(paste0(gsub(":|-| ","", Sys.time())))
 }
 
+# Rename columns of object and return modified object
+.renameCols <- function(obj, oldCols, newCols)
+{
+  if(length(oldCols) == length(newCols))
+  {
+    colnames(obj)[na.omit(match(oldCols, colnames(obj)))] <- newCols
+  }
+  return(obj)
+}
+
 # Suppress output from a function
 .suppressOutput <- function(func, ...)
 {
