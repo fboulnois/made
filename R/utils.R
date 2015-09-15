@@ -134,24 +134,31 @@
     libDirs <- libDirs[dir.exists(libDirs)]
 
     pkgPath <- find.package(package, libDirs, quiet = TRUE)
+    if(length(pkgPath) == 0)
+    {
+      return(FALSE)
+    }
     pkgDir  <- normalizePath(dirname(pkgPath), "/", TRUE)
     pkgInfo <- readRDS(system.file("Meta", "package.rds", package = package, lib.loc = pkgDir))
 
     .getRequiredPackages2(pkgInfo, quietly = TRUE)
     pkgDeps <- unique(names(pkgInfo$Depends))
 
-    success <- tryCatch(
-      {
-        ns  <- loadNamespace(package, c(pkgDir, libDirs))
-        env <- attachNamespace(ns, depends = pkgDeps)
-        return(TRUE)
-      }, error = function(e)
-      {
-        return(FALSE)
-      })
+    ns  <- loadNamespace(package, c(pkgDir, libDirs))
+    env <- attachNamespace(ns, depends = pkgDeps)
 
-    return(success)
+    return(TRUE)
   }
 
-  return(suppressMessages(loadPackage(package)))
+  return(suppressMessages(tryCatch(loadPackage(package), error = function(e)
+  {
+    if(e$message == "namespace is already attached")
+    {
+      return(TRUE)
+    }
+    else
+    {
+      return(FALSE)
+    }
+  })))
 }
