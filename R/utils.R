@@ -8,10 +8,10 @@
 # Verify that a microarray platform is supported
 .check.platform <- function(platformName)
 {
-  platformName <- tolower(gsub("[^[:alnum:]]","", platformName))
+  platformTrim <- tolower(gsub("[^[:alnum:]]","", platformName))
   platformData <- read.csv(system.file("extdata", "platforms.csv", package = "made"), stringsAsFactors = FALSE)
 
-  pos <- which(platformData == platformName, arr.ind = TRUE)
+  pos <- which(platformData == platformTrim, arr.ind = TRUE)
   if(length(pos) == 0)
   {
     stop(sprintf("The microarray platform '%s' is not currently supported.", platformName))
