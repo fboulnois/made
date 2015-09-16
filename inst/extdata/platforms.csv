@@ -1,8 +1,8 @@
 geo.name,chip.name,platform.design,annotation.db
 gpl96,hgu133a,pd.hg.u133a,hgu133a.db
-gpl571,hgu133a2,pd.hg.u133a.2,hgu133a2.db
-gpl570,hgu133plus2,pd.hg.u133.plus.2,hgu133plus2.db
 gpl97,hgu133b,pd.hg.u133b,hgu133b.db
+gpl570,hgu133plus2,pd.hg.u133.plus.2,hgu133plus2.db
+gpl571,hgu133a2,pd.hg.u133a.2,hgu133a2.db
 gpl6244,hugene10stv1,pd.hugene.1.0.st.v1,hugene10sttranscriptcluster.db
 gpl11532,hugene11stv1,pd.hugene.1.1.st.v1,hugene11sttranscriptcluster.db
 gpl16686,hugene20st,pd.hugene.2.0.st,hugene20sttranscriptcluster.db
