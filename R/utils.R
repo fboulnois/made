@@ -11,7 +11,11 @@
   platformTrim <- tolower(gsub("[^[:alnum:]]","", platformName))
   platformData <- read.csv(system.file("extdata", "platforms.csv", package = "made"), stringsAsFactors = FALSE)
 
-  pos <- which(platformData == platformTrim, arr.ind = TRUE)
+  pos <- which(platformData == platformName, arr.ind = TRUE)
+  if(length(pos) == 0)
+  {
+    pos <- which(platformData == platformTrim, arr.ind = TRUE)
+  }
   if(length(pos) == 0)
   {
     stop(sprintf("The microarray platform '%s' is not currently supported.", platformName))
