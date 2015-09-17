@@ -22,7 +22,8 @@ Imports:
   yaml
 Suggests:
   GO.db,
-  KEGGREST
+  KEGGREST,
+  knitr
 biocViews:
   BatchEffect,
   DataImport,
@@ -40,3 +41,4 @@ biocViews:
   ProprietaryPlatforms,
   QualityControl,
   TwoChannel
+VignetteBuilder: knitr

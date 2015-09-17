@@ -1,0 +1,10 @@
+---
+title:  "made User's Guide"
+author: "FB"
+date:   "`r format(Sys.time(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{made User's Guide}
+  %\VignetteEncoding{UTF-8}
+---
