@@ -47,22 +47,6 @@ ma.summarize <- function(config, eset)
   stopifnot(class(eset) == "ExpressionSet")
   config <- read.yaml.config(config)
 
-  # Perform log transformation on eset if it has not already been done
-  do.log2 <- function(eset)
-  {
-    curExprs <- Biobase::exprs(eset)
-    qvals <- as.numeric(quantile(curExprs, c(0.00, 0.25, 0.50, 0.75, 0.99, 1.0), na.rm = TRUE))
-    # Check whether or not data is log-transformed
-    notLog <- (qvals[5] > 100) || (qvals[6] - qvals[1] > 50 && qvals[2] > 0) || (qvals[2] > 0 && qvals[2] < 1 && qvals[4] > 1 && qvals[4] < 2)
-    if(notLog)
-    {
-      warning("Expression set is not log-transformed.")
-      curExprs[curExprs <= 0 ] <- NaN
-      Biobase::exprs(eset) <- log2(curExprs)
-    }
-    return(eset)
-  }
-
   # Load the corresponding annotation database
   get.annotation.data <- function(eset)
   {
@@ -136,7 +120,7 @@ ma.summarize <- function(config, eset)
     return(list(top.table = tf, limma.model = mf, sva.model = modSVs))
   }
 
-  eset <- do.log2(eset)
+  eset <- .do.log2(eset)
 
   dbData <- get.annotation.data(eset)
   modSVs <- sva.estimate(eset, config$data)
