@@ -94,12 +94,13 @@ ma.summarize <- function(config, eset)
     cmx <- config$data$contrast.matrix
     dmx <- config$data$design.matrix
 
-    tf <- mf <- setNames(as.list(1:ncol(cmx)), colnames(cmx))
+    # Compute microarray statistics using empirical Bayes
+    fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
+
+    tf <- setNames(as.list(1:ncol(cmx)), colnames(cmx))
     for(i in 1:ncol(cmx))
     {
       cat(sprintf("Contrasting %s.\n", colnames(cmx)[i]))
-
-      fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
       tt  <- limma::topTable(fit, coef = i, number = Inf, adjust.method = "BH", confint = TRUE)
 
       # Check which probe sets are differentially expressed or have large log-fold change
@@ -114,10 +115,9 @@ ma.summarize <- function(config, eset)
 
       # Store toptable and limma model in lists
       tf[[i]] <- tt
-      mf[[i]] <- fit
     }
 
-    return(list(top.table = tf, limma.model = mf, sva.model = modSVs))
+    return(list(top.table = tf, limma.model = fit, sva.model = modSVs))
   }
 
   eset <- .do.log2(eset)
