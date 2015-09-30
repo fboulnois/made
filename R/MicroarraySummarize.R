@@ -96,19 +96,24 @@ ma.summarize <- function(config, eset)
 
     # Compute microarray statistics using empirical Bayes
     fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
+    ess <- fit$coefficients / sqrt(fit$s2.post)
 
     tf <- setNames(as.list(1:ncol(cmx)), colnames(cmx))
     for(i in 1:ncol(cmx))
     {
       cat(sprintf("Contrasting %s.\n", colnames(cmx)[i]))
-      tt  <- limma::topTable(fit, coef = i, number = Inf, adjust.method = "BH", confint = TRUE)
+      
+      tt <- limma::topTable(fit, coef = i, number = Inf, adjust.method = "BH", confint = TRUE)
+      tt$PROBEID <- row.names(tt)
+
+      # Merge effect size and variance for each probe
+      tt <- merge(tt, data.frame(PROBEID = names(fit$s2.post), ES = ess[ ,i], s2 = fit$s2.post), by = "PROBEID")
 
       # Check which probe sets are differentially expressed or have large log-fold change
       tt$DE <- tt$adj.P.Val < config$global_options$qvalue
       tt$sigFC <- abs(tt$logFC) > log2(1.5)
 
       # Merge annotation database with differentially expressed probe sets, remove unknown probe sets
-      tt$PROBEID <- row.names(tt)
       tt <- merge(tt, dbData, by = "PROBEID")
       tt <- tt[!is.na(tt$ENTREZID), ]
       tt <- tt[ order(tt$P.Value) , ]
