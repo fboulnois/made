@@ -117,6 +117,7 @@ ma.summarize <- function(config, eset)
       tt <- merge(tt, dbData, by = "PROBEID")
       tt <- tt[!is.na(tt$ENTREZID), ]
       tt <- tt[ order(tt$P.Value) , ]
+      tt <- tt[!duplicated(tt$ENTREZID), ]
 
       # Store toptable and limma model in lists
       tf[[i]] <- tt
