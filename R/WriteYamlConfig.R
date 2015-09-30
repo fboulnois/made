@@ -248,7 +248,7 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
   }
 
   # Write group file output
-  write.group.file <- function(analysisDir, config, group)
+  write.group.file <- function(analysisDir, config, group, opts)
   {
     groupFile <- file.path(analysisDir, config$groups$group_file)
     groupHndl <- file(groupFile, open = "wt")
@@ -257,9 +257,12 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
     writeLines(group$header, con = groupHndl)
     write.table(group$df, groupHndl, row.names = FALSE, sep = "\t")
 
-    # Give user warning of what to do next
-    warning(sprintf("The file '%s' must be modified to assign controls and cases before launching analysis!",
-                    normalizePath(groupFile)), immediate. = TRUE)
+    # Give user warning of what to do next if groups haven't been assigned
+    if(is.null(opts$groups.df))
+    {
+      warning(sprintf("The file '%s' must be modified to assign controls and cases before launching analysis!",
+                      normalizePath(groupFile)), immediate. = TRUE)
+    }
   }
 
   check.analysis.dir(analysisDir)
@@ -271,5 +274,5 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
   groups <- get.group.data(analysisDir, groupBy, opts)
 
   write.config.file(analysisDir, config)
-  write.group.file(analysisDir, config, groups)
+  write.group.file(analysisDir, config, groups, opts)
 }
