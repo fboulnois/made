@@ -260,7 +260,7 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
     # Give user warning of what to do next if groups haven't been assigned
     if(is.null(opts$groups.df))
     {
-      warning(sprintf("The file '%s' must be modified to assign controls and cases before launching analysis!",
+      warning(sprintf("The file '%s' must be modified to assign groups before launching analysis!",
                       normalizePath(groupFile)), immediate. = TRUE)
     }
   }
