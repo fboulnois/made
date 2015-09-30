@@ -117,7 +117,7 @@ ma.summarize <- function(config, eset)
       tf[[i]] <- tt
     }
 
-    return(list(top.table = tf, limma.model = fit, sva.model = modSVs))
+    return(list(top.tables = tf, limma.model = fit, sva.model = modSVs))
   }
 
   eset <- .do.log2(eset)
@@ -130,9 +130,9 @@ ma.summarize <- function(config, eset)
   if(config$global_options$save_intermediates)
   {
     analysisDir <- dirname(config$groups$group_file)
-    .write.table.list(models$top.table, analysisDir)
+    .write.table.list(models$top.tables, analysisDir)
     saveRDS(models, file.path(analysisDir, "limmaModels.rds"))
   }
 
-  return(models$top.table)
+  return(models$top.tables)
 }
