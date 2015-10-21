@@ -71,28 +71,34 @@ ma.summarize <- function(config, eset)
   }
 
   # Adjust for surrogate variables (biological and non-biological variability)
-  sva.estimate <- function(eset, groupData)
+  sva.estimate <- function(eset, config)
   {
-    if(ncol(eset) != nrow(groupData$design.matrix))
+    modf <- config$data$design.matrix
+    mod0 <- model.matrix(~1, config$data$groups)
+
+    cmx <- config$data$contrast.matrix
+
+    if(ncol(eset) != nrow(modf))
     {
       stop("Number of samples in the expression set do not match those in the experimental design.")
     }
 
-    modf <- groupData$design.matrix
-    mod0 <- model.matrix(~1, groupData$groups)
-
     sva1 <- .gc.wrapper(sva::sva, Biobase::exprs(eset), modf, mod0)
-    modSVs <- cbind(modf, sva1$sv)
     cat("\n")
 
-    return(modSVs)
+    modf <- cbind(modf, sva1$sv)
+
+    dummy <- matrix(0, nrow = sva1$n.sv, ncol = ncol(cmx))
+    cmx <- rbind(cmx, dummy)
+
+    return(list(design.matrix = modf, contrast.matrix = cmx))
   }
 
   # Calculate differential expression for eset
-  differential.expression <- function(eset, config, modSVs, dbData)
+  differential.expression <- function(eset, config, models, dbData)
   {
-    cmx <- config$data$contrast.matrix
-    dmx <- config$data$design.matrix
+    dmx <- models$design.matrix
+    cmx <- models$contrast.matrix
 
     # Compute microarray statistics using empirical Bayes
     fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
@@ -123,14 +129,14 @@ ma.summarize <- function(config, eset)
       tf[[i]] <- tt
     }
 
-    return(list(top.tables = tf, limma.model = fit, sva.model = modSVs))
+    return(list(top.tables = tf, limma.model = fit, design.matrix = dmx))
   }
 
   eset <- .do.log2(eset)
 
   dbData <- get.annotation.data(eset)
-  modSVs <- sva.estimate(eset, config$data)
-  models <- differential.expression(eset, config, modSVs, dbData)
+  models <- sva.estimate(eset, config)
+  models <- differential.expression(eset, config, models, dbData)
 
   # Save output to file
   if(config$global_options$save_intermediates)
