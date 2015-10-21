@@ -124,6 +124,7 @@ read.yaml.config <- function(config, checkGroups = TRUE, getGroups = TRUE)
   {
     not.null(config$global_options)
     is.probability(config$global_options$qvalue)
+    is.single.logical(config$global_options$adjust_batch_effect)
     is.single.logical(config$global_options$save_intermediates)
   }
 

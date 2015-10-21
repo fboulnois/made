@@ -83,13 +83,16 @@ ma.summarize <- function(config, eset)
       stop("Number of samples in the expression set do not match those in the experimental design.")
     }
 
-    sva1 <- .gc.wrapper(sva::sva, Biobase::exprs(eset), modf, mod0)
-    cat("\n")
-
-    modf <- cbind(modf, sva1$sv)
-
-    dummy <- matrix(0, nrow = sva1$n.sv, ncol = ncol(cmx))
-    cmx <- rbind(cmx, dummy)
+    if(config$global_options$adjust_batch_effect)
+    {
+      sva1 <- .gc.wrapper(sva::sva, Biobase::exprs(eset), modf, mod0)
+      cat("\n")
+      
+      modf <- cbind(modf, sva1$sv)
+      
+      dummy <- matrix(0, nrow = sva1$n.sv, ncol = ncol(cmx))
+      cmx <- rbind(cmx, dummy)
+    }
 
     return(list(design.matrix = modf, contrast.matrix = cmx))
   }

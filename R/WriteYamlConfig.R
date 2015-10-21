@@ -30,6 +30,8 @@
 #'    for multiple comparisons and describes the minimum false discovery rate
 #'    (FDR) at which a test may be called significant: the default is
 #'    \code{0.05}.}
+#'    \item{\code{adjust.batch.effect}}{A logical indicating whether or not
+#'    batch effects should be adjusted: the default is \code{TRUE}.}
 #'    \item{\code{save.intermediates}}{A logical indicating whether or not
 #'    intermediate outputs should be saved: the default is \code{FALSE}.}
 #'    \item{\code{quality.assessment}}{A logical indicating whether or not
@@ -105,7 +107,7 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
   # Verify that the other specified options are valid and update the config if necessary
   check.other.opts <- function(groupBy, opts)
   {
-    validOpts <- c("qvalue", "save.intermediates",
+    validOpts <- c("qvalue", "adjust.batch.effect", "save.intermediates",
                    "quality.assessment", "normalization", "summarization", "write.report",
                    "group.file", "contrast.groups", "eset", "groups.df")
 
@@ -123,6 +125,11 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
     if(!is.null(opts$qvalue))
     {
       config$global_options$qvalue <- opts$qvalue
+    }
+
+    if(!is.null(opts$adjust.batch.effect))
+    {
+      config$global_options$adjust_batch_effect <- opts$adjust.batch.effect
     }
 
     if(!is.null(opts$save.intermediates))

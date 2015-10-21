@@ -1,5 +1,6 @@
 global_options:
   qvalue: 0.05
+  adjust_batch_effect: yes
   save_intermediates: no
 pipeline:
   quality_assessment: yes

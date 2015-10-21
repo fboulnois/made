@@ -47,6 +47,8 @@ otherwise defaults will be used:
    for multiple comparisons and describes the minimum false discovery rate
    (FDR) at which a test may be called significant: the default is
    \code{0.05}.}
+   \item{\code{adjust.batch.effect}}{A logical indicating whether or not
+   batch effects should be adjusted: the default is \code{TRUE}.}
    \item{\code{save.intermediates}}{A logical indicating whether or not
    intermediate outputs should be saved: the default is \code{FALSE}.}
    \item{\code{quality.assessment}}{A logical indicating whether or not
