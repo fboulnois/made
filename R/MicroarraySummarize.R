@@ -107,7 +107,7 @@ ma.summarize <- function(config, eset)
     fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
     ess <- fit$coefficients / sqrt(fit$s2.post)
 
-    tf <- setNames(as.list(1:ncol(cmx)), colnames(cmx))
+    tf <- setNames(vector(mode = "list", length = ncol(cmx)), colnames(cmx))
     for(i in 1:ncol(cmx))
     {
       cat(sprintf("Contrasting %s.\n", colnames(cmx)[i]))
