@@ -87,9 +87,9 @@ ma.summarize <- function(config, eset)
     {
       sva1 <- .gc.wrapper(sva::sva, Biobase::exprs(eset), modf, mod0)
       cat("\n")
-      
+
       modf <- cbind(modf, sva1$sv)
-      
+
       dummy <- matrix(0, nrow = sva1$n.sv, ncol = ncol(cmx))
       cmx <- rbind(cmx, dummy)
     }
@@ -111,7 +111,7 @@ ma.summarize <- function(config, eset)
     for(i in 1:ncol(cmx))
     {
       cat(sprintf("Contrasting %s.\n", colnames(cmx)[i]))
-      
+
       tt <- limma::topTable(fit, coef = i, number = Inf, adjust.method = "BH", confint = TRUE)
       tt$PROBEID <- row.names(tt)
 
