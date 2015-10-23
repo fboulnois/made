@@ -107,7 +107,10 @@ ma.summarize <- function(config, eset)
     fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
     ess <- fit$coefficients / sqrt(fit$s2.post)
 
-    tf <- setNames(vector(mode = "list", length = ncol(cmx)), colnames(cmx))
+    hasGODB <- .silentLoad("GO.db")
+    hasKEGG <- .silentLoad("KEGGREST")
+
+    tf <- goid <- kegg <- setNames(vector(mode = "list", length = ncol(cmx)), colnames(cmx))
     for(i in 1:ncol(cmx))
     {
       cat(sprintf("Contrasting %s.\n", colnames(cmx)[i]))
@@ -128,11 +131,22 @@ ma.summarize <- function(config, eset)
       tt <- tt[ order(tt$P.Value) , ]
       tt <- tt[!duplicated(tt$ENTREZID), ]
 
-      # Store toptable and limma model in lists
+      # Store toptable, go terms, and kegg pathways in lists
       tf[[i]] <- tt
+
+      if(hasGODB)
+      {
+        goidRes <- limma::goana(tt$ENTREZID[tt$DE & tt$sigFC], universe = tt$ENTREZID, covariate = tt$AveExpr)
+        goid[[i]] <- goidRes[order(goidRes$P.DE), ]
+      }
+      if(hasKEGG)
+      {
+        keggRes <- limma::kegga(tt$ENTREZID[tt$DE & tt$sigFC], universe = tt$ENTREZID, covariate = tt$AveExpr)
+        kegg[[i]] <- keggRes[order(keggRes$P.DE), ]
+      }
     }
 
-    return(list(top.tables = tf, limma.model = fit, design.matrix = dmx))
+    return(list(top.tables = tf, go.terms = goid, kegg.pathways = kegg, limma.model = fit, design.matrix = dmx))
   }
 
   eset <- .do.log2(eset)
