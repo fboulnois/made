@@ -128,20 +128,20 @@
 }
 
 # Write a list of tables into files
-.write.table.list <- function(tableList, outputDir)
+.write.table.list <- function(tableList, outputDir, prefix = "", suffix = "")
 {
   stopifnot(is.list(tableList))
   stopifnot(is.character(outputDir))
 
-  output.table <- function(tableList, tableNames, outputDir)
+  output.table <- function(tableList, tableNames, outputDir, prefix, suffix)
   {
     # Remove garbage characters
-    tableFileName <- paste0(gsub("[^[:alnum:]-]","", tableNames), ".csv")
+    tableFileName <- paste0(prefix, gsub("[^[:alnum:]-]","", tableNames), suffix, ".csv")
     write.csv(tableList, file.path(outputDir, tableFileName), row.names = FALSE, na = "")
     return(NULL)
   }
 
-  mapply(output.table, tableList = tableList, tableNames = names(tableList), outputDir = outputDir)
+  mapply(output.table, tableList = tableList, tableNames = names(tableList), outputDir = outputDir, prefix = prefix, suffix = suffix)
 }
 
 # Load package and dependencies silently
