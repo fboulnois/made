@@ -134,14 +134,15 @@ ma.summarize <- function(config, eset)
       # Store toptable, go terms, and kegg pathways in lists
       tf[[i]] <- tt
 
-      if(hasGODB)
+      pos <- tt$DE & tt$sigFC
+      if(hasGODB && any(pos))
       {
-        goidRes <- limma::goana(tt$ENTREZID[tt$DE & tt$sigFC], universe = tt$ENTREZID, covariate = tt$AveExpr)
+        goidRes <- limma::goana(tt$ENTREZID[pos], universe = tt$ENTREZID, covariate = tt$AveExpr)
         goid[[i]] <- goidRes[order(goidRes$P.DE), ]
       }
-      if(hasKEGG)
+      if(hasKEGG && any(pos))
       {
-        keggRes <- limma::kegga(tt$ENTREZID[tt$DE & tt$sigFC], universe = tt$ENTREZID, covariate = tt$AveExpr)
+        keggRes <- limma::kegga(tt$ENTREZID[pos], universe = tt$ENTREZID, covariate = tt$AveExpr)
         kegg[[i]] <- keggRes[order(keggRes$P.DE), ]
       }
     }
