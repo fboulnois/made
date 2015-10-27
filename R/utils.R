@@ -28,15 +28,22 @@
 .do.log2 <- function(eset)
 {
   curExprs <- Biobase::exprs(eset)
-  qvals <- as.numeric(quantile(curExprs, c(0.00, 0.25, 0.50, 0.75, 0.99, 1.0), na.rm = TRUE))
   # Check whether or not data is log-transformed
+  qvals <- as.numeric(quantile(curExprs, c(0.00, 0.25, 0.50, 0.75, 0.99, 1.0), na.rm = TRUE))
   notLog <- (qvals[5] > 100) || (qvals[6] - qvals[1] > 50 && qvals[2] > 0) || (qvals[2] > 0 && qvals[2] < 1 && qvals[4] > 1 && qvals[4] < 2)
   if(notLog)
   {
     warning("Expression set is not log-transformed.")
-    curExprs[curExprs <= 0 ] <- NaN
-    Biobase::exprs(eset) <- log2(curExprs)
+    curExprs <- log2(curExprs)
   }
+  # Replace missing values with 0
+  posNA <- is.na(curExprs)
+  if(sum(posNA) > 0.01*prod(dim(eset)))
+  {
+    warning("More than 1% of the expression set has missing values.")
+  }
+  curExprs[posNA] <- 0
+  Biobase::exprs(eset) <- curExprs
   return(eset)
 }
 
