@@ -67,7 +67,7 @@ ma.summarize <- function(config, eset)
       stop("Expression set features must be probe sets.")
     }
 
-    return(hsel)
+    return(list(package = annotationPkg, data = hsel))
   }
 
   # Adjust for surrogate variables (biological and non-biological variability)
@@ -98,7 +98,7 @@ ma.summarize <- function(config, eset)
   }
 
   # Calculate differential expression for eset
-  differential.expression <- function(eset, config, svaModels, dbData)
+  differential.expression <- function(eset, config, svaModels, dbAnnotation)
   {
     dmx <- svaModels$design.matrix
     cmx <- svaModels$contrast.matrix
@@ -126,7 +126,7 @@ ma.summarize <- function(config, eset)
       tt$sigFC <- abs(tt$logFC) > log2(1.5)
 
       # Merge annotation database with differentially expressed probe sets, remove unknown probe sets
-      tt <- merge(tt, dbData, by = "PROBEID")
+      tt <- merge(tt, dbAnnotation$data, by = "PROBEID")
       tt <- tt[!is.na(tt$ENTREZID), ]
       tt <- tt[ order(tt$P.Value) , ]
       tt <- tt[!duplicated(tt$ENTREZID), ]
@@ -152,9 +152,9 @@ ma.summarize <- function(config, eset)
 
   eset <- .do.log2(eset)
 
-  dbData <- get.annotation.data(eset)
+  dbAnnotation <- get.annotation.data(eset)
   svaModels <- sva.estimate(eset, config)
-  allModels <- differential.expression(eset, config, svaModels, dbData)
+  allModels <- differential.expression(eset, config, svaModels, dbAnnotation)
 
   # Save output to file
   if(config$global_options$save_intermediates)
