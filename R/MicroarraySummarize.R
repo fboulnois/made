@@ -98,10 +98,10 @@ ma.summarize <- function(config, eset)
   }
 
   # Calculate differential expression for eset
-  differential.expression <- function(eset, config, models, dbData)
+  differential.expression <- function(eset, config, svaModels, dbData)
   {
-    dmx <- models$design.matrix
-    cmx <- models$contrast.matrix
+    dmx <- svaModels$design.matrix
+    cmx <- svaModels$contrast.matrix
 
     # Compute microarray statistics using empirical Bayes
     fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
@@ -153,16 +153,16 @@ ma.summarize <- function(config, eset)
   eset <- .do.log2(eset)
 
   dbData <- get.annotation.data(eset)
-  models <- sva.estimate(eset, config)
-  models <- differential.expression(eset, config, models, dbData)
+  svaModels <- sva.estimate(eset, config)
+  allModels <- differential.expression(eset, config, svaModels, dbData)
 
   # Save output to file
   if(config$global_options$save_intermediates)
   {
     analysisDir <- dirname(config$groups$group_file)
-    .write.table.list(models$top.tables, analysisDir, prefix = "genes-")
-    saveRDS(models, file.path(analysisDir, "limmaModels.rds"))
+    .write.table.list(allModels$top.tables, analysisDir, prefix = "genes-")
+    saveRDS(allModels, file.path(analysisDir, "limmaModels.rds"))
   }
 
-  return(models$top.tables)
+  return(allModels$top.tables)
 }
