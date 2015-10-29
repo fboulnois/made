@@ -13,8 +13,8 @@
 #' @param eset Expression set object describing microarray experiment at the
 #' level of probes.
 #'
-#' @param tf A list of top tables for each comparison of interest and their
-#' genes, associated log-fold changes, and statistical values.
+#' @param results A summary of all the data in the expression set for each
+#' condition generated using the \code{ma.summarize} function.
 #'
 #' @importFrom rmarkdown render
 #'

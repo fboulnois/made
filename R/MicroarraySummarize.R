@@ -8,7 +8,7 @@
 #' the False Discovery Rate (FDR) adjusted p-values (q-values), and the 95\%
 #' confidence intervals for the log-fold change. Expression sets which are not
 #' log-transformed are log-transformed for the purpose of this function.
-#' Batch effect is adjusted using Surrogate Variable Analysis (SVA) and
+#' Batch effects are adjusted using Surrogate Variable Analysis (SVA) and
 #' gene-level summarization is assessed using the empirical Bayes function from
 #' the \code{limma} package. If the package \code{GOstats} is installed, Gene
 #' Ontology (GO) term enrichment is performed to determine biologically relevant
@@ -23,8 +23,22 @@
 #' @param eset Expression set object describing microarray experiment at the
 #' level of probes.
 #'
-#' @return A list of top tables for each comparison of interest and their genes,
-#' associated log-fold changes, and statistical values.
+#' @return A summary of all the data in the expression set for each condition.
+#' \describe{
+#'    \item{top.tables}{A list of genes, associated log-fold changes, and
+#'    other statistical values of interest.}
+#'    \item{go.terms}{A list of biological terms associated with the expression
+#'    set.}
+#'    \item{reactome}{A list of biological pathways associated with the
+#'    expression set.}
+#'    \item{limma.model}{An \code{MArrayLM} fitted model object containing all
+#'    of the statistical information relating to the expression set produced by
+#'    the \code{eBayes} function in the \code{limma} package.}
+#'    \item{design.matrix}{The experimental design matrix which represents the
+#'    associations between samples and groups and is used to help fit the model.
+#'    This matrix may have been modified by the \code{sva} function if batch
+#'    effects were adjusted.}
+#'  }
 #'
 #' @references Benjamini, Yoav, and Yosef Hochberg. "Controlling the false
 #' discovery rate: a practical and powerful approach to multiple testing."

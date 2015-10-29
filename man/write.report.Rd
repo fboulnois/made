@@ -4,7 +4,7 @@
 \alias{write.report}
 \title{Write microarray report}
 \usage{
-write.report(config, eset, tf)
+write.report(config, eset, results)
 }
 \arguments{
 \item{config}{Character string consisting of the path to the configuration
@@ -14,8 +14,8 @@ configuration list associated with a microarray experiment.}
 \item{eset}{Expression set object describing microarray experiment at the
 level of probes.}
 
-\item{tf}{A list of top tables for each comparison of interest and their
-genes, associated log-fold changes, and statistical values.}
+\item{results}{A summary of all the data in the expression set for each
+condition generated using the \code{ma.summarize} function.}
 }
 \description{
 Generate the final microarray report.
