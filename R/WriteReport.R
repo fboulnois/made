@@ -19,18 +19,18 @@
 #' @importFrom rmarkdown render
 #'
 #' @export
-write.report <- function(config, eset, tf)
+write.report <- function(config, eset, results)
 {
   config <- read.yaml.config(config)
 
-  if(missing(eset))
+  if(missing(eset) || class(eset) != "ExpressionSet")
   {
     stop("Expression set is required to write report.")
   }
 
-  if(missing(tf))
+  if(missing(results) || class(results) != "MadeSummary")
   {
-    stop("List of gene top tables is required to write report.")
+    stop("Experiment summary is required to write report.")
   }
 
   infile  <- normalizePath(system.file("extdata", "report.rmd", package = "made"), mustWork = TRUE)

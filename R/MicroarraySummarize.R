@@ -186,5 +186,7 @@ ma.summarize <- function(config, eset)
     saveRDS(allModels, file.path(analysisDir, "limmaModels.rds"))
   }
 
-  return(allModels$top.tables)
+  class(allModels) <- "MadeSummary"
+
+  return(allModels)
 }

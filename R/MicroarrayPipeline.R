@@ -28,11 +28,11 @@ ma.pipeline <- function(config)
 
   if(config$pipeline$summarization)
   {
-    tf <- ma.summarize(config, eset)
+    results <- ma.summarize(config, eset)
   }
 
   if(config$pipeline$write_report)
   {
-    write.report(config, eset, tf)
+    write.report(config, eset, results)
   }
 }
