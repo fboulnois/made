@@ -10,7 +10,11 @@
 #' log-transformed are log-transformed for the purpose of this function.
 #' Batch effect is adjusted using Surrogate Variable Analysis (SVA) and
 #' gene-level summarization is assessed using the empirical Bayes function from
-#' the \code{limma} package.
+#' the \code{limma} package. If the package \code{GOstats} is installed, Gene
+#' Ontology (GO) term enrichment is performed to determine biologically relevant
+#' terms in each condition. Similarly, if the \code{ReactomePA} package is
+#' installed, pathway analysis is performed using the Reactome database to
+#' determine which biological pathways are involved in each condition.
 #'
 #' @param config Character string consisting of the path to the configuration
 #' file generated using the \code{write.yaml.config} function or parsed
@@ -35,6 +39,13 @@
 #' Shi, and Gordon K. Smyth. "limma powers differential expression analyses for
 #' RNA-sequencing and microarray studies." \emph{Nucleic acids research} (2015):
 #' gkv007.
+#'
+#' Falcon, Seth, and Robert Gentleman. "Using GOstats to test gene lists for GO
+#' term association." \emph{Bioinformatics} 23, no. 2 (2007): 257-258.
+#'
+#' Croft, David, Gavin O'Kelly, Guanming Wu, Robin Haw, Marc Gillespie, Lisa
+#' Matthews, Michael Caudy et al. "Reactome: a database of reactions, pathways
+#' and biological processes." \emph{Nucleic acids research} (2010): gkq1018.
 #'
 #' @importFrom AnnotationDbi keys select
 #' @importFrom Biobase annotation exprs featureNames
