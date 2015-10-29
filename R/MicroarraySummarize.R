@@ -97,20 +97,33 @@ ma.summarize <- function(config, eset)
     return(list(design.matrix = modf, contrast.matrix = cmx))
   }
 
+  # GO term analysis for each ontology
+  go.term.analysis <- function(deGenes, universe, qvalue, annotation)
+  {
+    go.term.test <- function(ont, deGenes, universe, pvalue, annotation)
+    {
+      params <- new("GOHyperGParams", geneIds = deGenes, universeGeneIds = universe, annotation = annotation, pvalueCutoff = pvalue, ontology = ont, conditional = TRUE, testDirection = "over")
+      return(GOstats::hyperGTest(params))
+    }
+    return(lapply(list(BP = "BP", CC = "CC", MF = "MF"), go.term.test, deGenes = deGenes, universe = universe, pvalue = qvalue, annotation = annotation))
+  }
+
   # Calculate differential expression for eset
   differential.expression <- function(eset, config, svaModels, dbAnnotation)
   {
     dmx <- svaModels$design.matrix
     cmx <- svaModels$contrast.matrix
 
+    qvalue <- config$global_options$qvalue
+
     # Compute microarray statistics using empirical Bayes
     fit <- limma::eBayes(limma::contrasts.fit(limma::lmFit(eset, dmx), cmx))
     ess <- fit$coefficients / sqrt(fit$s2.post)
 
-    hasGODB <- .silentLoad("GO.db")
-    hasKEGG <- .silentLoad("KEGGREST")
+    hasGOstats <- .silentLoad("GOstats")
+    hasReactPA <- .silentLoad("ReactomePA")
 
-    tf <- goid <- kegg <- setNames(vector(mode = "list", length = ncol(cmx)), colnames(cmx))
+    tf <- gotests <- reactPA <- setNames(vector(mode = "list", length = ncol(cmx)), colnames(cmx))
     for(i in 1:ncol(cmx))
     {
       cat(sprintf("Contrasting %s.\n", colnames(cmx)[i]))
@@ -122,7 +135,7 @@ ma.summarize <- function(config, eset)
       tt <- merge(tt, data.frame(PROBEID = names(fit$s2.post), ES = ess[ ,i], s2 = fit$s2.post), by = "PROBEID")
 
       # Check which probe sets are differentially expressed or have large log-fold change
-      tt$DE <- tt$adj.P.Val < config$global_options$qvalue
+      tt$DE <- tt$adj.P.Val < qvalue
       tt$sigFC <- abs(tt$logFC) > log2(1.5)
 
       # Merge annotation database with differentially expressed probe sets, remove unknown probe sets
@@ -135,19 +148,17 @@ ma.summarize <- function(config, eset)
       tf[[i]] <- tt
 
       pos <- tt$DE & tt$sigFC
-      if(hasGODB && any(pos))
+      if(hasGOstats && any(pos))
       {
-        goidRes <- limma::goana(tt$ENTREZID[pos], universe = tt$ENTREZID, covariate = tt$AveExpr)
-        goid[[i]] <- goidRes[order(goidRes$P.DE), ]
+        gotests[[i]] <- go.term.analysis(deGenes = tt$ENTREZID[pos], universe = tt$ENTREZID, qvalue = qvalue, annotation = dbAnnotation$package)
       }
-      if(hasKEGG && any(pos))
+      if(hasReactPA && any(pos))
       {
-        keggRes <- limma::kegga(tt$ENTREZID[pos], universe = tt$ENTREZID, covariate = tt$AveExpr)
-        kegg[[i]] <- keggRes[order(keggRes$P.DE), ]
+        reactPA[[i]] <- ReactomePA::enrichPathway(gene = tt$ENTREZID[pos], universe = tt$ENTREZID, organism = "human", qvalueCutoff = qvalue)
       }
     }
 
-    return(list(top.tables = tf, go.terms = goid, kegg.pathways = kegg, limma.model = fit, design.matrix = dmx))
+    return(list(top.tables = tf, go.terms = gotests, reactome = reactPA, limma.model = fit, design.matrix = dmx))
   }
 
   eset <- .do.log2(eset)
