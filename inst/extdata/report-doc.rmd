@@ -1,0 +1,114 @@
+---
+title:  'Microarray Analysis of Differential Expression Report'
+author: '`r Sys.info()[["effective_user"]]`'
+date:   '`r format(Sys.time(), "%B %d, %Y")`'
+output:
+  html_document:
+    toc: true
+---
+
+```{r options_knitr, echo = FALSE}
+# Set global report options
+knitr::read_chunk(system.file("extdata", "report-code.R", package = "made"))
+knitr::opts_chunk$set(echo = FALSE, fig.width = 12, fig.height = 8)
+options(width = 120)
+```
+
+```{r init}
+```
+
+# Introduction
+
+This report summarizes the results of an mRNA microarray experiment using the
+`MADE` pipeline. To cite the `MADE` package in publications type `citation("made")`
+in R.
+
+The analysis involves the following steps:
+
+1. Quality Assessment, to identify common errors and artifacts with the
+experiment.
+2. Normalization, which adjusts the data such that meaningful biological
+comparisons can be identified.
+3. Differential expression, which compares gene expression across groups defined
+by the user.
+4. Coexpression, which looks at correlation patterns in gene expression.
+5. Pathway Analysis, which determines which biological terms and pathways are
+associated to the experiment.
+
+# Experimental setup
+
+## User options
+
+## Group and sample information
+
+# Quality Assessment
+
+## Log-intensity values distribution
+
+```{r plothistogram, dev = 'svg', fig.cap = 'log-intensity values distribution'}
+```
+
+Figure `r figNum`: Distribution of log-intensities in samples.
+
+Each distribution corresponds to a sample. The x-axis represents the probe
+intensity in log2 scale and the y-axis represents the probe density. In the
+ideal case, samples should have similar expression profiles corresponding to a
+subset of a single population. If multiple groups of distributions are observed
+then this may represent an unknown source of variation which can confound the
+variables of interest. Sufficient heterogeneity may indicate an underlying
+problem with the experiment.
+
+`r if(hasBatches){ "Samples are colored by which scan dates they belong to." }`
+
+## Hierarchical clustering of samples
+
+```{r plotdendro, dev = 'svg', fig.cap = 'hierarchical clustering of samples'}
+```
+
+Figure `r figNum`: Dendrogram of the hierarchical clustering of samples.
+
+The Spearman distance metric was used to assess the similarity between each
+sample. The vertical height between each node indicates how closely correlated
+the samples are. Samples which are more closely correlated to each other are
+clustered together. Samples which are far from all other samples may represent
+outliers. In the ideal case, all samples from the same group should be tightly
+clustered together as homogenous bands of color. If the groups are mixed up such
+that unrelated samples are clustered together than this may represent an unknown
+source of variation which can confound the variables of interest. Sufficient
+heterogeneity may indicate an underlying problem with the experiment.
+
+# Normalization
+
+# Differential Expression
+
+The top 50 genes for each group comparison are as follows:
+
+```{r degenestbl, results = 'asis'}
+```
+
+# Coexpression
+
+The Spearman distance metric was used to assess the similarity between
+differentially expressed genes across samples. Genes which are more closely
+correlated to each other are clustered together in the dendrogram. The top 50
+most correlated genes for each group comparison are as follows:
+
+```{r corheatmap, dev = 'svg', results = 'asis'}
+```
+
+# Pathway analysis
+
+## Gene Ontology (GO) term analysis
+
+```{r goterms, results = 'asis'}
+```
+
+## Reactome pathways analysis
+
+```{r reactpa, results = 'asis'}
+```
+
+# Other information
+
+```{r sessioninfo}
+```

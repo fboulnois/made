@@ -33,11 +33,11 @@ write.report <- function(config, eset, results)
     stop("Experiment summary is required to write report.")
   }
 
-  infile  <- normalizePath(system.file("extdata", "report.rmd", package = "made"), mustWork = TRUE)
+  infile  <- normalizePath(system.file("extdata", "report-doc.rmd", package = "made"), mustWork = TRUE)
   outfile <- normalizePath(file.path(dirname(config$groups$group_file), sprintf("%s_microarray_report.html", .timestamped())), mustWork = FALSE)
 
   tryCatch({
-    rmarkdown::render(input = infile, output_file = outfile)
+    rmarkdown::render(input = infile, output_file = outfile, clean = FALSE)
   }, error = function(e)
   {
     emsg <- e$message
