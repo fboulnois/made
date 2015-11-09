@@ -251,9 +251,10 @@ top50.genes <- function(results)
   for(i in 1:numNames)
   {
     maxRows <- 1:min(nrow(results$top.tables[[i]]), 50)
-    tt <- results$top.tables[[i]][maxRows, c("PROBEID", "SYMBOL", "logFC", "CI.L", "CI.R", "adj.P.Val")]
+    tt <- results$top.tables[[i]][maxRows, c("PROBEID", "ENTREZID", "SYMBOL", "logFC", "CI.L", "CI.R", "adj.P.Val")]
     tt$qvalue <- ifelse(tt$adj.P.Val < 1e-16, "< 1e-16", format(signif(tt$adj.P.Val, 3), scientific = TRUE))
     tt$CI <- sprintf("%.3f to %.3f", tt$CI.L, tt$CI.R)
+    tt$SYMBOL <- sprintf("[%s](http://www.ncbi.nlm.nih.gov/gene/%s)", tt$SYMBOL, tt$ENTREZID)
     rownames(tt) <- NULL
 
     tt <- tt[, c("SYMBOL", "logFC", "CI", "qvalue")]
@@ -316,6 +317,7 @@ if(hasGoTerms)
 
     goterms$Pvalue <- ifelse(goterms$Pvalue < 1e-16, "< 1e-16", format(signif(goterms$Pvalue, 3), scientific = TRUE))
     goterms$OddsRatio <- ifelse(goterms$OddsRatio > 500, "> 500.00", format(goterms$OddsRatio, digits = 3))
+    goterms[[goidcol]] <- sprintf("[%s](http://amigo.geneontology.org/amigo/term/%s)", goterms[[goidcol]], goterms[[goidcol]])
 
     colnames(goterms) <- c("GO ID", "Term", "Odds Ratio", "Conditional pvalue")
 
@@ -356,6 +358,7 @@ if(hasReactPA)
       maxRows <- 1:min(nrow(reactome), 20)
       reactome <- reactome[maxRows, c("ID", "Description", "qvalue")]
       reactome$qvalue <- ifelse(reactome$qvalue < 1e-16, "< 1e-16", format(signif(reactome$qvalue, 3), scientific = TRUE))
+      reactome$ID <- sprintf("[%s](http://www.reactome.org/content/detail/%s)", reactome$ID, reactome$ID)
       rownames(reactome) <- NULL
 
       cat(sprintf("### %s\n", allNames[[i]]))
