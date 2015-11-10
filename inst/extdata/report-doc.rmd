@@ -100,12 +100,12 @@ most correlated genes for each group comparison are as follows:
 
 ## Gene Ontology (GO) term analysis
 
-```{r goterms, results = 'asis'}
+```{r goterms, warning = FALSE, results = 'asis'}
 ```
 
 ## Reactome pathways analysis
 
-```{r reactpa, results = 'asis'}
+```{r reactpa, warning = FALSE, results = 'asis'}
 ```
 
 # Other information

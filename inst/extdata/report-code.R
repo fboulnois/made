@@ -311,6 +311,10 @@ if(hasGoTerms)
   print.goterms <- function(goresult)
   {
     goterms <- GOstats::summary(goresult)
+    if(nrow(goterms) == 0)
+    {
+      return(NULL)
+    }
     maxRows <- 1:min(nrow(goterms), 20)
     goidcol <- colnames(goterms)[[1]]
     goterms <- goterms[maxRows, c(goidcol, "Term", "OddsRatio", "Pvalue")]
@@ -335,6 +339,10 @@ if(hasGoTerms)
     numNames <- length(allNames)
     for(i in 1:numNames)
     {
+      if(is.null(results$go.terms[[i]]) || (is.atomic(results$go.terms[[i]]) && is.na(results$go.terms[[i]])))
+      {
+        next
+      }
       cat(sprintf("### %s\n", allNames[[i]]))
       lapply(results$go.terms[[i]], print.goterms)
       cat("\n\n")
@@ -355,6 +363,10 @@ if(hasReactPA)
     for(i in 1:numNames)
     {
       reactome <- DOSE::summary(results$reactome[[i]])
+      if(is.null(results$reactome[[i]]) || (is.atomic(results$reactome[[i]]) && is.na(results$reactome[[i]])) || nrow(reactome) == 0)
+      {
+        next
+      }
       maxRows <- 1:min(nrow(reactome), 20)
       reactome <- reactome[maxRows, c("ID", "Description", "qvalue")]
       reactome$qvalue <- ifelse(reactome$qvalue < 1e-16, "< 1e-16", format(signif(reactome$qvalue, 3), scientific = TRUE))
