@@ -47,4 +47,6 @@ write.report <- function(config, eset, results)
     }
     stop(emsg)
   })
+
+  return(outfile)
 }
