@@ -211,7 +211,7 @@ color.leaf <- function(node, samples, sampleColors)
 {
   if(is.leaf(node))
   {
-    gsm <- stringr::str_extract(attr(node, "label"), "[[:alnum:]]+")
+    gsm <- stringr::str_extract(attr(node, "label"), "[\\w-]+")
     pos <- which(gsm == samples)
     attr(node, "nodePar") <- list(lab.col = sampleColors[pos])
   }
