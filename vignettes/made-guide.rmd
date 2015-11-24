@@ -6,5 +6,7 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{made User's Guide}
+  %\VignettePackage{made}
+  %\VignetteKeywords{microarray differential expression pipeline}
   %\VignetteEncoding{UTF-8}
 ---
