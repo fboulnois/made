@@ -236,7 +236,7 @@ draw.dendrogram <- function(config, eset)
   sampleDendrogram <- dendrapply(sampleDendrogram, color.leaf, samples = config$data$groups$sample.file, sampleColors = dendroColors[posGroups])
 
   par(cex = 0.8)
-  draw.fig(plot, x = sampleDendrogram)
+  draw.fig(plot, x = sampleDendrogram, main = "Hierarchical clustering of samples")
   legend("topright", legend = groups, fill = dendroColors, inset = 0.01, bg = "white")
 }
 
