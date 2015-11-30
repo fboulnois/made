@@ -10,3 +10,87 @@ vignette: >
   %\VignetteKeywords{microarray differential expression pipeline}
   %\VignetteEncoding{UTF-8}
 ---
+
+# Introduction to the `made` pipeline
+
+The `made` package provides tools for the reproducible analysis of
+oligonucleotide arrays using a simple, clear, and consistent interface.
+
+This vignette will guide new users on using the features of the `made` pipeline
+for microarray analysis. The pipeline involves a few discrete steps, including
+generating the configuration and group file for the experiment, normalizing the
+microarray samples, performing gene level summarization, and generating the
+report.
+
+All `made` experiments require a configuration file, or `config`. Preparing the
+`config` is covered in the ["Defining the configuration and group file"](#defining-the-configuration-and-group-file) section.
+Multiple entry points are then available depending on the input data. If the
+data available is the raw data, new users should consult the
+["Transforming raw data into an expression set"](#transforming-raw-data-into-an-expression-set) 
+section. This converts the raw data into a suitable form for R known as an
+expression set (or `eset`), which describes the microarray experiment at the
+level of probes. Otherwise, if the user has already transformed their microarray
+data into an expression set, they should consult the
+["Summarizing an expression set"](#summarizing-an-expression-set) section.
+
+Users should begin by loading the package in R using `library(made)`.
+
+# Defining the configuration and group file
+
+The first step for any `made` experiment is to create a configuration file, or
+`config`, which can be used by the various functions in the `made` package. The
+`config` consists of a set of desired options which can be used to reproducibly
+analyze a set of oligonucleotide microarrays. The `config` is generated using
+the `write.yaml.config` function, which has the following signature:
+
+`write.yaml.config(analysisDir, groupBy = NULL, ...)`
+
+The `analysisDir` parameter describes the directory in which the analysis will
+be performed.
+
+The `groupBy` parameter must be one of `"dirs"`, `"files"`, or `"eset"`, and
+describes the relationship between the microarray samples and groups. Groups
+will be used to compare different types of samples to each other. For example,
+one might have two groups, one for controls and one for disease. Grouping by
+`"dirs"` indicates that the analysis directory contains folders of samples and
+the folders themselves will be used to group the samples. Grouping by `"files"`
+indicates that the analysis directory contains a number of samples which will
+each be individually assigned to a group. Grouping by `"eset"` indicates that
+the user already has an expression set (`eset`) that they want to use in the
+analysis.
+
+The `...` parameter can be used to specify additional options, such as the
+statistical significance threshold, whether or not intermediate outputs should
+be saved, and whether a final report should be generated. It can be also used to
+define the groups programmatically, otherwise the user will need to modify the
+group file after the configuration has been created and assign the groups
+manually given the `groupBy` option they previously chose. A warning will be
+displayed to the user if this is the case.
+
+More information regarding the parameters to the `write.yaml.config` function
+can be obtained by typing `?made::write.yaml.config` in R.
+
+# Transforming raw data into an expression set
+
+Once the `config` has been generated, raw data can be transformed into an
+expression set. The function to do this is `ma.normalize`, and accepts the
+`config` as a parameter to the function. The raw data is transformed into an
+expression set using the desired configuration options and returned from the
+function.
+
+There are also other ways of converting raw data into an expression set. For
+example, it is possible to obtain normalized expression sets directly from the
+Gene Expression Omnibus (GEO). To do this, the `GEOquery` package needs to be
+installed. Once a user has identified a dataset of interest, they can use the
+`getGEO(gse)` function in the `GEOquery` package to download a list of all
+expression sets associated to the dataset.
+
+# Summarizing an expression set
+
+Once the raw data has been transformed into an expression set, it can be
+summarized using the `ma.summarize` function. This function requires both the
+the `config` and the `eset` as input parameters. It outputs a summary of the
+experiment for each group comparison which includes the differentially expressed
+genes between each group and the linear models used to generate the summary.
+Additionally, if the `GOstats` and `ReactomePA` packages are installed, the
+summary also includes biological terms and pathways associated to the experiment.
