@@ -42,6 +42,9 @@ microarray pipeline.
 
 ## User options
 
+```{r useropts, results = 'asis'}
+```
+
 ## Group and sample information
 
 ```{r sampleinfo, results = 'asis'}

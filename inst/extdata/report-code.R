@@ -51,6 +51,35 @@ logi.to.str <- function(opt, plural = FALSE)
   return(txt)
 }
 
+# ---- useropts ----
+
+option.clean <- function(txt)
+{
+  pos <- txt == "qvalue"
+  tmp <- stringr::str_replace_all(txt[!pos], "_", " ")
+  txt <- c(txt[pos], gsub("^([[:alpha:]])", "\\U\\1", tmp, perl = TRUE))
+  return(txt)
+}
+
+option.table <- function(config)
+{
+  # Temporarily blow away some of the config parameters
+  config$data <- NULL
+  config$groups <- NULL
+
+  # Output option table for each set of options
+  cfgNames <- names(config)
+  for(i in 1:length(cfgNames))
+  {
+    cfg <- cfgNames[i]
+    df <- data.frame(Options = option.clean(names(config[[cfg]])), Value = as.character(config[[cfg]]))
+    cat(sprintf("### %s\n", option.clean(cfg)))
+    draw.table(x = df, align = c("l", "r"))
+  }
+}
+
+option.table(config)
+
 # ---- sampleinfo ----
 
 sample.table <- function(config)
