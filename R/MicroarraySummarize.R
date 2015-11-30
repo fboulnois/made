@@ -191,6 +191,7 @@ ma.summarize <- function(config, eset)
   dbAnnotation <- get.annotation.data(eset)
   svaModels <- sva.estimate(eset, config)
   allModels <- differential.expression(eset, config, svaModels, dbAnnotation)
+  class(allModels) <- "MadeSummary"
 
   # Save output to file
   if(config$global_options$save_intermediates)
@@ -199,8 +200,6 @@ ma.summarize <- function(config, eset)
     .write.table.list(allModels$top.tables, analysisDir, prefix = "genes-")
     saveRDS(allModels, file.path(analysisDir, "limmaModels.rds"))
   }
-
-  class(allModels) <- "MadeSummary"
 
   return(allModels)
 }
