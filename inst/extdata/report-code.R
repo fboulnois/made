@@ -4,8 +4,18 @@ figNum <- 0
 draw.fig <- function(func, ...)
 {
   do.call(func, list(...))
+  cat("\n\n")
   figNum <<- figNum + 1
   return(figNum)
+}
+
+tabNum <- 0
+draw.table <- function(...)
+{
+  print(do.call(knitr::kable, list(...)))
+  cat("\n\n")
+  tabNum <<- tabNum + 1
+  return(tabNum)
 }
 
 hasGoTerms <- !is.null(results$go.terms)
@@ -55,8 +65,7 @@ sample.table <- function(config)
   uniGroups <- unique(groupData$Group)
   res <- vapply(uniGroups, group.samples, character(1), groupData = groupData)
   df <- data.frame(Group = uniGroups, Samples = res)
-  print(knitr::kable(df, row.names = FALSE))
-  cat("\n\n")
+  draw.table(x = df, row.names = FALSE)
   return(list(groups = uniGroups, samples = groupData$sample.file))
 }
 
@@ -282,8 +291,7 @@ top50.genes <- function(results)
     colnames(tt) <- c("Gene symbol", "Log fold-change", "95% CI", "qvalue")
 
     cat(sprintf("## %s\n", allNames[[i]]))
-    print(knitr::kable(tt, digits = 3, align = c("l", "r", "r", "r")))
-    cat("\n\n")
+    draw.table(x = tt, digits = 3, align = c("l", "r", "r", "r"))
   }
 }
 
@@ -317,7 +325,6 @@ cor.heatmap <- function(eset, results)
     cat(sprintf("## %s\n", allNames[[i]]))
     par(oma = c(0, 0, 2.2, 0))
     draw.fig(heatmap, x = dS[corProbes, corProbes], Rowv = NA, Colv = NA, symm = TRUE, labRow = corGenes, labCol = corGenes, main = mainTitle, xlab = "genes", ylab = "genes", col = hmColors, margins = c(7,7))
-    cat("\n\n")
   }
 }
 
@@ -350,8 +357,7 @@ if(hasGoTerms)
     ontoPos <- match(ontoWhich, names(ontogo))
 
     cat(sprintf("#### %s\n", ontogo[ontoPos]))
-    print(knitr::kable(goterms, digits = 3, align = c("l", "l", "r", "r")))
-    cat("\n\n")
+    draw.table(x = goterms, digits = 3, align = c("l", "l", "r", "r"))
   }
 
   top20.goterms <- function(results)
@@ -395,8 +401,7 @@ if(hasReactPA)
       rownames(reactome) <- NULL
 
       cat(sprintf("### %s\n", allNames[[i]]))
-      print(knitr::kable(reactome, digits = 3, align = c("l", "l", "r")))
-      cat("\n\n")
+      draw.table(x = reactome, digits = 3, align = c("l", "l", "r"))
     }
   }
 
