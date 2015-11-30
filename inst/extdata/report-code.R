@@ -41,6 +41,27 @@ logi.to.str <- function(opt, plural = FALSE)
   return(txt)
 }
 
+# ---- sampleinfo ----
+
+sample.table <- function(config)
+{
+  group.samples <- function(group, groupData)
+  {
+    pos <- group == groupData$Group
+    txt <- paste0(groupData[pos,"sample.file"], collapse = ", ")
+    return(txt)
+  }
+  groupData <- config$data$groups
+  uniGroups <- unique(groupData$Group)
+  res <- vapply(uniGroups, group.samples, character(1), groupData = groupData)
+  df <- data.frame(Group = uniGroups, Samples = res)
+  print(knitr::kable(df, row.names = FALSE))
+  cat("\n\n")
+  return(list(groups = uniGroups, samples = groupData$sample.file))
+}
+
+sampleInfo <- sample.table(config)
+
 # ---- plothistogram ----
 
 date.parse <- function(dates)

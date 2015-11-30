@@ -44,6 +44,13 @@ microarray pipeline.
 
 ## Group and sample information
 
+```{r sampleinfo, results = 'asis'}
+```
+
+A total of `r length(sampleInfo$samples)` samples were analyzed across
+`r length(sampleInfo$groups)` different groups. The groups were compared as
+follows: `r config$groups$contrast_groups`.
+
 # Quality Assessment
 
 The following sections include important indicators relating to the overall
