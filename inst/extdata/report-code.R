@@ -4,8 +4,18 @@ figNum <- 0
 draw.fig <- function(func, ...)
 {
   do.call(func, list(...))
+  cat("\n\n")
   figNum <<- figNum + 1
   return(figNum)
+}
+
+tabNum <- 0
+draw.table <- function(...)
+{
+  print(do.call(knitr::kable, list(...)))
+  cat("\n\n")
+  tabNum <<- tabNum + 1
+  return(tabNum)
 }
 
 hasGoTerms <- !is.null(results$go.terms)
@@ -40,6 +50,55 @@ logi.to.str <- function(opt, plural = FALSE)
   }
   return(txt)
 }
+
+# ---- useropts ----
+
+option.clean <- function(txt)
+{
+  pos <- txt == "qvalue"
+  tmp <- stringr::str_replace_all(txt[!pos], "_", " ")
+  txt <- c(txt[pos], gsub("^([[:alpha:]])", "\\U\\1", tmp, perl = TRUE))
+  return(txt)
+}
+
+option.table <- function(config)
+{
+  # Temporarily blow away some of the config parameters
+  config$data <- NULL
+  config$groups <- NULL
+
+  # Output option table for each set of options
+  cfgNames <- names(config)
+  for(i in 1:length(cfgNames))
+  {
+    cfg <- cfgNames[i]
+    df <- data.frame(Options = option.clean(names(config[[cfg]])), Value = as.character(config[[cfg]]))
+    cat(sprintf("### %s\n", option.clean(cfg)))
+    draw.table(x = df, align = c("l", "r"))
+  }
+}
+
+option.table(config)
+
+# ---- sampleinfo ----
+
+sample.table <- function(config)
+{
+  group.samples <- function(group, groupData)
+  {
+    pos <- group == groupData$Group
+    txt <- paste0(groupData[pos,"sample.file"], collapse = ", ")
+    return(txt)
+  }
+  groupData <- config$data$groups
+  uniGroups <- unique(groupData$Group)
+  res <- vapply(uniGroups, group.samples, character(1), groupData = groupData)
+  df <- data.frame(Group = uniGroups, Samples = res)
+  draw.table(x = df, row.names = FALSE)
+  return(list(groups = uniGroups, samples = groupData$sample.file))
+}
+
+sampleInfo <- sample.table(config)
 
 # ---- plothistogram ----
 
@@ -236,7 +295,7 @@ draw.dendrogram <- function(config, eset)
   sampleDendrogram <- dendrapply(sampleDendrogram, color.leaf, samples = config$data$groups$sample.file, sampleColors = dendroColors[posGroups])
 
   par(cex = 0.8)
-  draw.fig(plot, x = sampleDendrogram)
+  draw.fig(plot, x = sampleDendrogram, main = "Hierarchical clustering of samples")
   legend("topright", legend = groups, fill = dendroColors, inset = 0.01, bg = "white")
 }
 
@@ -261,8 +320,7 @@ top50.genes <- function(results)
     colnames(tt) <- c("Gene symbol", "Log fold-change", "95% CI", "qvalue")
 
     cat(sprintf("## %s\n", allNames[[i]]))
-    print(knitr::kable(tt, digits = 3, align = c("l", "r", "r", "r")))
-    cat("\n\n")
+    draw.table(x = tt, digits = 3, align = c("l", "r", "r", "r"))
   }
 }
 
@@ -296,7 +354,6 @@ cor.heatmap <- function(eset, results)
     cat(sprintf("## %s\n", allNames[[i]]))
     par(oma = c(0, 0, 2.2, 0))
     draw.fig(heatmap, x = dS[corProbes, corProbes], Rowv = NA, Colv = NA, symm = TRUE, labRow = corGenes, labCol = corGenes, main = mainTitle, xlab = "genes", ylab = "genes", col = hmColors, margins = c(7,7))
-    cat("\n\n")
   }
 }
 
@@ -329,8 +386,7 @@ if(hasGoTerms)
     ontoPos <- match(ontoWhich, names(ontogo))
 
     cat(sprintf("#### %s\n", ontogo[ontoPos]))
-    print(knitr::kable(goterms, digits = 3, align = c("l", "l", "r", "r")))
-    cat("\n\n")
+    draw.table(x = goterms, digits = 3, align = c("l", "l", "r", "r"))
   }
 
   top20.goterms <- function(results)
@@ -374,8 +430,7 @@ if(hasReactPA)
       rownames(reactome) <- NULL
 
       cat(sprintf("### %s\n", allNames[[i]]))
-      print(knitr::kable(reactome, digits = 3, align = c("l", "l", "r")))
-      cat("\n\n")
+      draw.table(x = reactome, digits = 3, align = c("l", "l", "r"))
     }
   }
 

@@ -19,9 +19,9 @@ options(width = 120)
 
 # Introduction
 
-This report summarizes the results of an mRNA microarray experiment using the
-`MADE` pipeline. To cite the `MADE` package in publications type `citation("made")`
-in R.
+This report summarizes the results of an oligonucleotide microarray experiment
+using the `MADE` pipeline. To cite the `MADE` package in publications type
+`citation("made")` in R.
 
 The analysis involves the following steps:
 
@@ -31,79 +31,127 @@ experiment.
 comparisons can be identified.
 3. Differential expression, which compares gene expression across groups defined
 by the user.
-4. Coexpression, which looks at correlation patterns in gene expression.
+4. Coexpression, which identifies correlation patterns in gene expression.
 5. Pathway Analysis, which determines which biological terms and pathways are
 associated to the experiment.
 
 # Experimental setup
 
+The following sections summarize the options and experimental setup of the
+microarray pipeline.
+
 ## User options
+
+```{r useropts, results = 'asis'}
+```
 
 ## Group and sample information
 
+```{r sampleinfo, results = 'asis'}
+```
+
+A total of `r length(sampleInfo$samples)` samples were analyzed across
+`r length(sampleInfo$groups)` different groups. The groups were compared as
+follows: `r config$groups$contrast_groups`.
+
 # Quality Assessment
+
+The following sections include important indicators relating to the overall
+quality of the microarray experiment. The log-intensity values distribution
+identifies the quality of the samples, while the hierarchical dendrogram
+identifies the quality of the groups. Sufficient heterogeneity in either of
+these indicators may reveal an underlying problem with the experiment.
 
 ## Log-intensity values distribution
 
 ```{r plothistogram, dev = 'svg', fig.cap = 'log-intensity values distribution'}
 ```
 
-Figure `r figNum`: Distribution of log-intensities in samples.
-
-Each distribution corresponds to a sample. The x-axis represents the probe
-intensity in log2 scale and the y-axis represents the probe density. In the
-ideal case, samples should have similar expression profiles corresponding to a
-subset of a single population. If multiple groups of distributions are observed
-then this may represent an unknown source of variation which can confound the
-variables of interest. Sufficient heterogeneity may indicate an underlying
-problem with the experiment.
-
-`r if(hasBatches){ "Samples are colored by which scan dates they belong to." }`
+The sample quality can be summarized in a log-intensity values distribution
+plot. The x-axis represents the probe intensity in log2 scale and the y-axis
+represents the probe density.`r if(hasBatches){ " Samples are colored by which scan dates they belong to." }` The
+resulting intensity distribution for each sample is plotted. In the ideal case,
+samples should have similar intensity profiles. If a sample has a distribution
+which is very different from the other distributions, this typically indicates
+an outlier. If multiple groups of distributions are observed instead then this
+may represent an unknown source of variation which can confound the variables of
+interest.
 
 ## Hierarchical clustering of samples
 
 ```{r plotdendro, dev = 'svg', fig.cap = 'hierarchical clustering of samples'}
 ```
 
-Figure `r figNum`: Dendrogram of the hierarchical clustering of samples.
-
-The Spearman distance metric was used to assess the similarity between each
-sample. The vertical height between each node indicates how closely correlated
-the samples are. Samples which are more closely correlated to each other are
-clustered together. Samples which are far from all other samples may represent
-outliers. In the ideal case, all samples from the same group should be tightly
-clustered together as homogenous bands of color. If the groups are mixed up such
-that unrelated samples are clustered together than this may represent an unknown
-source of variation which can confound the variables of interest. Sufficient
-heterogeneity may indicate an underlying problem with the experiment.
+The quality of each group can be summarized in a dendrogram of the hierarchical
+clustering of samples. The Spearman distance metric is calculated to assess the
+similarity between each sample. The vertical height between each node indicates
+how closely correlated the samples are. Samples are colored by which group they
+belong to. Samples which are more closely correlated to each other are clustered
+together. Samples which are far from all other samples may represent outliers.
+In the ideal case, all samples from the same group should be tightly clustered
+together as homogeneous bands of color. If the groups are mixed up such that
+unrelated samples are clustered together than this may represent an unknown
+source of variation which can confound the variables of interest.
 
 # Normalization
 
 # Differential Expression
 
-The top 50 genes for each group comparison are as follows:
+The top 50 most differentially expressed genes for each group comparison are as
+follows:
 
 ```{r degenestbl, results = 'asis'}
 ```
 
 # Coexpression
 
-The Spearman distance metric was used to assess the similarity between
-differentially expressed genes across samples. Genes which are more closely
-correlated to each other are clustered together in the dendrogram. The top 50
-most correlated genes for each group comparison are as follows:
+Coexpression identifies correlated patterns in gene expression across samples.
+This is useful to find groups of genes which are expressed together either
+positively or negatively. A value between -1 and 1 is obtained for each pair of
+genes using the Spearman distance metric and then transformed into a color
+value: bright red indicates that the genes are perfectly positively correlated
+(i.e., they coexpress positively or negatively across samples), dark blue
+indicates that the genes are perfectly negatively correlated (i.e. when one is
+overexpressed the other is underexpressed or vice versa), and white indicates
+that the genes are not correlated. A gene always has perfect positive
+correlation with itself (i.e. the diagonal on the heatmap). The top 50 most
+correlated genes for each group comparison are as follows:
 
 ```{r corheatmap, dev = 'svg', results = 'asis'}
 ```
 
 # Pathway analysis
 
+The following sections represent biological terms or pathways that are
+statistically associated to the differentially expressed genes in each
+comparison of interest. The analyses are similar to using the hypergeometric
+distribution to find the probability of observing `n` or more differentially
+expressed genes annotated with a specific term amongst all genes available on
+the microarray.
+
 ## Gene Ontology (GO) term analysis
+
+The Gene Ontology (GO) term analysis identifies common biological terms among
+the set of differentially expressed genes. The Gene Ontology uses a hierarchical
+representation of biological terms, where each term may have zero or more child
+terms. The hierarchy is composed of three top-level terms: Biological Process
+(BP), Cellular Component (CC), and Molecular Function (MF). Gene identifiers may
+be associated to terms or child terms. Because genes may be associated to
+multiple related terms in the GO hierarchy, during the analysis there is an
+additional step known as "conditioning" which successively prunes more general
+terms until only the most specific terms remain. The top 20 most significant GO
+terms for each top-level term in each group comparison are as follows:
 
 ```{r goterms, warning = FALSE, results = 'asis'}
 ```
 
-## Reactome pathways analysis
+## Reactome pathway analysis
+
+Reactome is an open-source, manually curated and peer reviewed database which
+links biological pathways with genes and proteins. The Reactome pathway analysis
+identifies common biological pathways among the set of differentially expressed
+genes. The top 20 most significant Reactome pathways for each group comparison
+are as follows:
 
 ```{r reactpa, warning = FALSE, results = 'asis'}
 ```
