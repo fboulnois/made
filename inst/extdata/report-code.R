@@ -245,11 +245,11 @@ draw.histogram <- function(eset)
   batchColors <- tryCatch({
     batches <- get.batches(eset)
     hasBatches <- TRUE
-    return(cm.colors(batches$n)[batches$kmeans$cluster])
+    cm.colors(batches$n)[batches$kmeans$cluster]
   }, error = function(e)
   {
     sampleNum <- length(Biobase::sampleNames(eset))
-    return(cm.colors(sampleNum))
+    cm.colors(sampleNum)
   })
 
   # Draw the histogram
