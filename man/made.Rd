@@ -23,5 +23,8 @@ by the analysis programmatically. Reading the configuration or group file can
 be accomplished using the functions \code{\link{read.yaml.config}} and
 \code{\link{read.group.file}} respectively, while writing the configuration
 file can be accomplished using the function \code{\link{write.yaml.config}}.
+
+For a detailed introduction, see the user's guide: \code{vignette("made-guide")}
+or try out the Affymetrix example: \code{vignette("example-affymetrix")}.
 }
 
