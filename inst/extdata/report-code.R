@@ -88,12 +88,12 @@ sample.table <- function(config)
   {
     pos <- group == groupData$Group
     txt <- paste0(groupData[pos,"sample.file"], collapse = ", ")
-    return(txt)
+    return(data.frame(Samples = txt, Count = sum(pos)))
   }
   groupData <- config$data$groups
   uniGroups <- unique(groupData$Group)
-  res <- vapply(uniGroups, group.samples, character(1), groupData = groupData)
-  df <- data.frame(Group = uniGroups, Samples = res)
+  res <- do.call(rbind, lapply(uniGroups, group.samples, groupData = groupData))
+  df <- data.frame(Group = uniGroups, res)
   draw.table(x = df, row.names = FALSE)
   return(list(groups = uniGroups, samples = groupData$sample.file))
 }
