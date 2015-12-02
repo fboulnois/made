@@ -102,6 +102,22 @@ remove batch effects, summarize the probe data, and generate a report:
 ma.pipeline(config)
 ```
 
+**Note**: Supported microarray chips in `made` depend on one or two additional
+packages for functionality. These packages are large and unique to each chip
+type and are thus not automatically installed with `made`. The two packages are
+composed of a platform design and an annotation database. The platform design
+describes the geometry of the chip including the location of probes and is
+required for Affymetrix arrays. The annotation database maps probes to accession
+numbers, chromosomal positions, genes, proteins, and pathways, and is required
+for both Affymetrix and Illumina microarrays.
+
+If the previous step caused an error which mentions that certain packages are
+missing, install them as follows:
+
+```
+BiocInstaller::biocLite(c("pd.hg.u133.plus.2", "hgu133plus2.db"))
+```
+
 # Reading the report
 
 The pipeline generates a microarray report summarizing the details of the
