@@ -15,6 +15,9 @@ directory.}
 
 \item{...}{Additional options to pass to the function.}
 }
+\value{
+A character string consisting of the path to the configuration file.
+}
 \description{
 Generate the configuration file describing a microarray experiment.
 }

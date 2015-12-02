@@ -16,6 +16,8 @@
 #' @param results A summary of all the data in the expression set for each
 #' group comparison generated using the \code{ma.summarize} function.
 #'
+#' @return A character string consisting of the path to the microarray report.
+#'
 #' @importFrom rmarkdown render
 #'
 #' @export

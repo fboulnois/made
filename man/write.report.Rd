@@ -17,6 +17,9 @@ level of probes.}
 \item{results}{A summary of all the data in the expression set for each
 group comparison generated using the \code{ma.summarize} function.}
 }
+\value{
+A character string consisting of the path to the microarray report.
+}
 \description{
 Generate the final microarray report.
 }

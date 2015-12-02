@@ -71,6 +71,8 @@
 #'
 #' @param ... Additional options to pass to the function.
 #'
+#' @return A character string consisting of the path to the configuration file.
+#'
 #' @seealso \code{\link{read.yaml.config}} to read and validate the
 #' configuration.
 #'
