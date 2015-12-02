@@ -5,41 +5,43 @@ Version: 0.0.1
 Date: 2015-07-28
 Author: FB [cre,aut]
 Maintainer: FB <fboulnois@mgh.harvard.edu>
-Description: Simple, reproducible pipeline for the analysis of microarray differential expression.
+Description: Simple, reproducible pipeline for the analysis of microarray
+    differential expression.
 License: GPL-2
 LazyData: TRUE
-Depends: R (>= 3.2.0)
+Depends:
+    R (>= 3.2.0)
 Imports:
-  affyio,
-  AnnotationDbi,
-  Biobase,
-  limma,
-  oligo,
-  parallel,
-  rmarkdown,
-  stringr,
-  sva,
-  yaml
+    affyio,
+    AnnotationDbi,
+    Biobase,
+    limma,
+    oligo,
+    parallel,
+    rmarkdown,
+    stringr,
+    sva,
+    yaml
 Suggests:
-  GOstats,
-  knitr,
-  madeData,
-  ReactomePA
-biocViews:
-  BatchEffect,
-  DataImport,
-  DifferentialExpression,
-  ExonArray,
-  GeneExpression,
-  GeneSetEnrichment,
-  Genetics,
-  Microarray,
-  mRNAMicroarray,
-  MultipleComparison,
-  Normalization,
-  OneChannel,
-  Preprocessing,
-  ProprietaryPlatforms,
-  QualityControl,
-  TwoChannel
+    GOstats,
+    knitr,
+    madeData,
+    ReactomePA
+biocViews: BatchEffect,
+    DataImport,
+    DifferentialExpression,
+    ExonArray,
+    GeneExpression,
+    GeneSetEnrichment,
+    Genetics,
+    Microarray,
+    mRNAMicroarray,
+    MultipleComparison,
+    Normalization,
+    OneChannel,
+    Preprocessing,
+    ProprietaryPlatforms,
+    QualityControl,
+    TwoChannel
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1
