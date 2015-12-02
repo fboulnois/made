@@ -30,6 +30,8 @@ ma.pipeline <- function(config)
 
   if(config$pipeline$write_report)
   {
-    write.report(config, eset, results)
+    report <- write.report(config, eset, results)
   }
+
+  return(report)
 }
