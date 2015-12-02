@@ -25,6 +25,9 @@
 #'
 #' @return Returns a modified configuration with group data.
 #'
+#' @examples
+#' read.group.file(config)
+#'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file
 #' and \code{\link{read.yaml.config}} to read and validate it.
 #'

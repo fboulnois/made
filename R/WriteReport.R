@@ -18,6 +18,9 @@
 #'
 #' @return A character string consisting of the path to the microarray report.
 #'
+#' @examples
+#' write.report(config, eset, results)
+#'
 #' @importFrom rmarkdown render
 #'
 #' @export

@@ -10,6 +10,11 @@
 #' file generated using the \code{write.yaml.config} function or parsed
 #' configuration list associated with a microarray experiment.
 #'
+#' @return A character string consisting of the path to the microarray report.
+#'
+#' @examples
+#' ma.pipeline(config)
+#'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file,
 #' \code{\link{ma.normalize}} to perform normalization,
 #' \code{\link{ma.summarize}} to perform gene level summarization, and

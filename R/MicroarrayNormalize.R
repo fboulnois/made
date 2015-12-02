@@ -18,6 +18,9 @@
 #' @return Returns an expression set object that contains the microarray data at
 #' the level of probes.
 #'
+#' @examples
+#' ma.normalize(config)
+#'
 #' @references Irizarry, Rafael A., Bridget Hobbs, Francois Collin, Yasmin D.
 #' Beazer-Barclay, Kristen J. Antonellis, Uwe Scherf, and Terence P. Speed.
 #' "Exploration, normalization, and summaries of high density oligonucleotide

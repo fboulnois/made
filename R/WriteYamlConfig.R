@@ -73,6 +73,11 @@
 #'
 #' @return A character string consisting of the path to the configuration file.
 #'
+#' @examples
+#' write.yaml.config(getwd(), groupBy = "files")
+#' write.yaml.config(getwd(), groupBy = "dirs", qvalue = 0.01)
+#' write.yaml.config(getwd(), groupBy = "eset", eset = eset)
+#'
 #' @seealso \code{\link{read.yaml.config}} to read and validate the
 #' configuration.
 #'

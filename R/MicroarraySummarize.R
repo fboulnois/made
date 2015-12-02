@@ -41,6 +41,9 @@
 #'    effects were adjusted.}
 #'  }
 #'
+#' @examples
+#' ma.summarize(config, eset)
+#'
 #' @references Benjamini, Yoav, and Yosef Hochberg. "Controlling the false
 #' discovery rate: a practical and powerful approach to multiple testing."
 #' \emph{Journal of the Royal Statistical Society}. Series B (Methodological)

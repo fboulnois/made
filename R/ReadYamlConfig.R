@@ -19,6 +19,11 @@
 #' fully validated including the group file, the class of the resulting
 #' configuration becomes \code{MadeConfig}.
 #'
+#' @examples
+#' read.yaml.config(config)
+#' read.yaml.config(config, checkGroups = FALSE, getGroups = FALSE)
+#' read.yaml.config("config.yaml")
+#'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file
 #' and \code{\link{read.group.file}} to read and validate the group file.
 #'
