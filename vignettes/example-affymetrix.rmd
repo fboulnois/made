@@ -1,0 +1,137 @@
+---
+title:  "Example using Affymetrix raw data"
+author: "FB"
+date:   "`r format(Sys.time(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Example using Affymetrix raw data}
+  %\VignettePackage{made}
+  %\VignetteKeywords{microarray differential expression pipeline affymetrix}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+Non-small cell lung cancers (NSCLC) are a group of heterogenous diseases with
+diverse pathological features and multiple histologies. Among the two most
+common NSCLCs are adenocarcinomas and squamous-cell carcinomas. Both of these
+histologies are genetically very different. Squamous-cell carcinomas typically
+have high levels of keratinization, which means that keratin genes may be useful
+biomarkers for this disease.
+
+We will be downloading a NSCLC dataset and comparing the patterns of expression
+between controls, adenocarcinomas, and squamous-cell carcinomas, along with
+identifying potential batch effects or other quality issues in the data.
+
+Before starting the analysis we will want to load the `made` library:
+
+```
+library(made)
+```
+
+# Downloading and extracting the Affymetrix data
+
+The raw Affymetrix data can be downloaded directly from the Gene Expression
+Omnibus (GEO) under the accession identifier `GSE18842`. The raw data is available [at the following link](https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE18842&format=file) (400MB).
+
+Extract the Affymetrix data to a folder: this folder will be used as the
+analysis directory for the rest of the pipeline. Store the full path of this
+folder in a variable in R.
+
+```
+affymetrixDir <- "full_path_to_Affymetrix_folder"
+```
+
+# Defining the configuration and group file
+
+The configuration file, or `config`, is used by almost all the functions in the
+`made` package. The `config` consists of a set of desired options which can be
+used to reproducibly analyze a set of oligonucleotide microarrays. Sharing the
+`config` with the microarray data allows other researchers to replicate an
+experiment exactly. The `config` is generated using the `write.yaml.config`
+function.
+
+The `write.yaml.config` function has many optional parameters
+(see `?write.yaml.config`), but requires at least two parameters: the analysis
+directory (`analysisDir`) and how samples should be grouped (`groupBy`). Since
+we have individual Affymetrix samples, we will group the samples by `"files"`.
+If we had multiple folders of samples that we wanted to compare instead, we
+might want to `groupBy = "dirs"` instead.
+
+Since all the optional parameters have defaults, we could create the `config`
+file and assign each sample to a group manually:
+
+```
+config <- write.yaml.config(analysisDir = affymetrixDir, groupBy = "files")
+```
+
+This can be tedious when there are a large number of samples, however, and so
+instead we will assign the groups programmatically using the optional parameters
+`contrast.groups` and `groups.df`.
+
+`contrast.groups` describes how the samples should be compared: in this case,
+we have controls, adenocarcinomas, and squamous-cell carcinomas. We will create
+these three groups and compare each to the other:
+
+```
+comparisons <- "adenocarcinoma-control, squamous-control, adenocarcinoma-squamous"
+```
+
+`groups.df` relates samples with their associated groups in a `data.frame`. We
+load a file describing these relationships using information from the original
+study:
+
+```
+groups <- read.table(system.file("extdata", "example-affymetrix-groups.txt", package = "made"), header = TRUE, comment.char = "#")
+```
+
+We can now create the complete `config` file:
+
+```
+config <- write.yaml.config(analysisDir = affymetrixDir, groupBy = "files", contrast.groups = comparisons, groups.df = groups)
+```
+
+# Running the pipeline
+
+Once the `config` is generated, the entire pipeline is easily run using the 
+command `ma.pipeline`. This command will read in and normalize the samples,
+remove batch effects, summarize the probe data, and generate a report:
+
+```
+ma.pipeline(config)
+```
+
+# Reading the report
+
+The pipeline generates a microarray report summarizing the details of the
+experiment. Open this report in any browser and you will see a table of contents
+followed by several sections. The table of contents can be clicked on to jump to
+that section. The experimental setup section provides a brief summary of the
+chosen options and group and sample information. The quality assessment section
+includes important indicators relating to the overall quality of the microarray
+experiment. The differential expression section shows the differentially
+expressed genes between each comparison of interest. The coexpression section
+identifies correlated patterns in gene expression across samples. The pathway
+analysis reveals biological terms or pathways that are statistically associated
+to the differentially expressed genes in each comparison of interest.
+
+The quality assessment section shows that samples are of high quality but that
+there is a potential source of batch effects. The log-intensity values
+distribution plot is smooth and the distributions are very similar, indicating
+that there are no obvious outliers in the samples. On the other hand, two of
+the samples are misclassified in the hierarchical clustering of samples,
+indicating that Surrogate Variable Analysis (SVA) should be used to remove any
+potential sources of batch effects (this option is on by default).
+
+A number of keratin genes (`KRTxx`) can be observed with large log-fold changes
+and high-statistical significance (`qvalue` column) in the comparison between
+squamous cell carcinoma and the other groups. This indicates that keratinization
+is an important process in the development of squamous-cell carcinomas.
+
+The most differentially expressed genes are highly correlated across samples in
+the coexpression heatmap.
+
+Finally, the pathway analysis reveals a number of statistically significant
+biological terms and pathways relating to the cellular junction suggesting that
+these pathways are dysregulated between non-small cell lung cancer subtypes.
