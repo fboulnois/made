@@ -52,7 +52,13 @@ is installed, pathway analysis is performed using the Reactome database to
 determine which biological pathways are involved in each group comparison.
 }
 \examples{
-ma.summarize(config, eset)
+if(require(madeData))
+{
+  dataPath <- system.file("extdata", package = "madeData")
+  config <- file.path(dataPath, "config.yaml")
+  eset <- readRDS(file.path(dataPath, "eset.rds"))
+  ma.summarize(config, eset)
+}
 
 }
 \references{

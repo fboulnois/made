@@ -19,7 +19,11 @@
 #' the level of probes.
 #'
 #' @examples
-#' ma.normalize(config)
+#' if(require(madeData))
+#' {
+#'   config <- system.file("extdata", "config.yaml", package = "madeData")
+#'   ma.normalize(config)
+#' }
 #'
 #' @references Irizarry, Rafael A., Bridget Hobbs, Francois Collin, Yasmin D.
 #' Beazer-Barclay, Kristen J. Antonellis, Uwe Scherf, and Terence P. Speed.

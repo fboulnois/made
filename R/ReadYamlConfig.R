@@ -20,9 +20,13 @@
 #' configuration becomes \code{MadeConfig}.
 #'
 #' @examples
-#' read.yaml.config(config)
-#' read.yaml.config(config, checkGroups = FALSE, getGroups = FALSE)
-#' read.yaml.config("config.yaml")
+#' if(require(madeData))
+#' {
+#'   config <- system.file("extdata", "config.yaml", package = "madeData")
+#'   read.yaml.config(config)
+#' }
+#' \donttest{read.yaml.config(config, checkGroups = FALSE, getGroups = FALSE)}
+#' \donttest{read.yaml.config("config.yaml")}
 #'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file
 #' and \code{\link{read.group.file}} to read and validate the group file.

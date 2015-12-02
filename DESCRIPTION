@@ -23,6 +23,7 @@ Imports:
 Suggests:
   GOstats,
   knitr,
+  madeData,
   ReactomePA
 biocViews:
   BatchEffect,

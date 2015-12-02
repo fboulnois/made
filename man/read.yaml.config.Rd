@@ -30,9 +30,13 @@ Each configuration option is checked for incongruities, including whether or
 not it is missing, its type, and its value.
 }
 \examples{
-read.yaml.config(config)
-read.yaml.config(config, checkGroups = FALSE, getGroups = FALSE)
-read.yaml.config("config.yaml")
+if(require(madeData))
+{
+  config <- system.file("extdata", "config.yaml", package = "madeData")
+  read.yaml.config(config)
+}
+\donttest{read.yaml.config(config, checkGroups = FALSE, getGroups = FALSE)}
+\donttest{read.yaml.config("config.yaml")}
 
 }
 \seealso{

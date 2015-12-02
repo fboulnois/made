@@ -13,7 +13,11 @@
 #' @return A character string consisting of the path to the microarray report.
 #'
 #' @examples
-#' ma.pipeline(config)
+#' if(require(madeData))
+#' {
+#'   config <- system.file("extdata", "config.yaml", package = "madeData")
+#'   ma.pipeline(config)
+#' }
 #'
 #' @seealso \code{\link{write.yaml.config}} to generate the configuration file,
 #' \code{\link{ma.normalize}} to perform normalization,

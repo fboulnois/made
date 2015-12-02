@@ -19,7 +19,14 @@
 #' @return A character string consisting of the path to the microarray report.
 #'
 #' @examples
-#' write.report(config, eset, results)
+#' if(require(madeData))
+#' {
+#'   dataPath <- system.file("extdata", package = "madeData")
+#'   config <- file.path(dataPath, "config.yaml")
+#'   eset <- readRDS(file.path(dataPath, "eset.rds"))
+#'   results <- readRDS(file.path(dataPath, "results.rds"))
+#'   write.report(config, eset, results)
+#' }
 #'
 #' @importFrom rmarkdown render
 #'

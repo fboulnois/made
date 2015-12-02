@@ -84,9 +84,13 @@ This option has no default: it can be used to programmatically set the
  }
 }
 \examples{
-write.yaml.config(getwd(), groupBy = "files")
-write.yaml.config(getwd(), groupBy = "dirs", qvalue = 0.01)
-write.yaml.config(getwd(), groupBy = "eset", eset = eset)
+if(require(madeData))
+{
+  dataPath <- system.file("extdata", package = "madeData")
+  write.yaml.config(dataPath, groupBy = "dirs")
+}
+\donttest{write.yaml.config(getwd(), groupBy = "files", qvalue = 0.01)}
+\donttest{write.yaml.config(getwd(), groupBy = "eset", eset = eset)}
 
 }
 \seealso{

@@ -74,9 +74,13 @@
 #' @return A character string consisting of the path to the configuration file.
 #'
 #' @examples
-#' write.yaml.config(getwd(), groupBy = "files")
-#' write.yaml.config(getwd(), groupBy = "dirs", qvalue = 0.01)
-#' write.yaml.config(getwd(), groupBy = "eset", eset = eset)
+#' if(require(madeData))
+#' {
+#'   dataPath <- system.file("extdata", package = "madeData")
+#'   write.yaml.config(dataPath, groupBy = "dirs")
+#' }
+#' \donttest{write.yaml.config(getwd(), groupBy = "files", qvalue = 0.01)}
+#' \donttest{write.yaml.config(getwd(), groupBy = "eset", eset = eset)}
 #'
 #' @seealso \code{\link{read.yaml.config}} to read and validate the
 #' configuration.

@@ -23,7 +23,11 @@ config. The pipeline consists of quality assessment, normalization,
 summarization, and creation of the final report.
 }
 \examples{
-ma.pipeline(config)
+if(require(madeData))
+{
+  config <- system.file("extdata", "config.yaml", package = "madeData")
+  ma.pipeline(config)
+}
 
 }
 \seealso{

@@ -29,7 +29,11 @@ background corrected nor normalized, a feature which is useful for quality
 assessment.
 }
 \examples{
-ma.normalize(config)
+if(require(madeData))
+{
+  config <- system.file("extdata", "config.yaml", package = "madeData")
+  ma.normalize(config)
+}
 
 }
 \references{

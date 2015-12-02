@@ -36,7 +36,11 @@ different levels:
  }
 }
 \examples{
-read.group.file(config)
+if(require(madeData))
+{
+  config <- system.file("extdata", "config.yaml", package = "madeData")
+  read.group.file(config)
+}
 
 }
 \seealso{

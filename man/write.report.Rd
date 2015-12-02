@@ -29,7 +29,14 @@ experiment. The information in the report depends on the config and the
 packages available.
 }
 \examples{
-write.report(config, eset, results)
+if(require(madeData))
+{
+  dataPath <- system.file("extdata", package = "madeData")
+  config <- file.path(dataPath, "config.yaml")
+  eset <- readRDS(file.path(dataPath, "eset.rds"))
+  results <- readRDS(file.path(dataPath, "results.rds"))
+  write.report(config, eset, results)
+}
 
 }
 

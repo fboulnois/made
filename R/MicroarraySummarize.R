@@ -42,7 +42,13 @@
 #'  }
 #'
 #' @examples
-#' ma.summarize(config, eset)
+#' if(require(madeData))
+#' {
+#'   dataPath <- system.file("extdata", package = "madeData")
+#'   config <- file.path(dataPath, "config.yaml")
+#'   eset <- readRDS(file.path(dataPath, "eset.rds"))
+#'   ma.summarize(config, eset)
+#' }
 #'
 #' @references Benjamini, Yoav, and Yosef Hochberg. "Controlling the false
 #' discovery rate: a practical and powerful approach to multiple testing."
