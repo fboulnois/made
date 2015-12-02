@@ -252,6 +252,7 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
   {
     configFile <- file.path(analysisDir, "config.yaml")
     writeLines(yaml::as.yaml(config), con = configFile)
+    return(configFile)
   }
 
   # Write group file output
@@ -280,6 +281,8 @@ write.yaml.config <- function(analysisDir, groupBy = NULL, ...)
   config <- check.other.opts(groupBy, opts)
   groups <- get.group.data(analysisDir, groupBy, opts)
 
-  write.config.file(analysisDir, config)
+  configFile <- write.config.file(analysisDir, config)
   write.group.file(analysisDir, config, groups, opts)
+
+  return(configFile)
 }
