@@ -86,7 +86,7 @@ ma.normalize <- function(config)
   norm.samples <- function(config, gfs)
   {
     normalize <- background <- ifelse(is.character(config$pipeline$normalization), TRUE, config$pipeline$normalization)
-    filepath <- file.path(dirname(config$groups$group_file), ifelse(normalize, "pstEset.rds", "preEset.rds"))
+    filepath <- file.path(dirname(config$groups$group_file), ifelse(normalize, "eset.rds", "rawEset.rds"))
 
     eset <- oligo::rma(gfs, background, normalize)
 
