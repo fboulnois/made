@@ -240,16 +240,24 @@ get.batches <- function(eset)
 
 draw.histogram <- function(eset)
 {
+  # Colorize batches, remove off-white colors
+  cm.mod <- function(n)
+  {
+    cmrgb <- cm.colors(n*1.67)
+    cmrgb <- c(cmrgb[1:floor(n/2)], rev(cmrgb)[1:ceiling(n/2)])
+    return(cmrgb)
+  }
+
   # Try to extract batches by scan date
   hasBatches <- FALSE
   batchColors <- tryCatch({
     batches <- get.batches(eset)
     hasBatches <- TRUE
-    cm.colors(batches$n)[batches$kmeans$cluster]
+    cm.mod(batches$n)[batches$kmeans$cluster]
   }, error = function(e)
   {
     sampleNum <- length(Biobase::sampleNames(eset))
-    rev(cm.colors(3*sampleNum))[1:sampleNum]
+    cm.mod(sampleNum)
   })
 
   # Draw the histogram
