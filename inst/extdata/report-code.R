@@ -249,7 +249,7 @@ draw.histogram <- function(eset)
   }, error = function(e)
   {
     sampleNum <- length(Biobase::sampleNames(eset))
-    cm.colors(sampleNum)
+    rev(cm.colors(3*sampleNum))[1:sampleNum]
   })
 
   # Draw the histogram
