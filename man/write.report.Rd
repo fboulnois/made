@@ -15,7 +15,7 @@ configuration list associated with a microarray experiment.}
 level of probes.}
 
 \item{results}{A summary of all the data in the expression set for each
-condition generated using the \code{ma.summarize} function.}
+group comparison generated using the \code{ma.summarize} function.}
 }
 \description{
 Generate the final microarray report.

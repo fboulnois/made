@@ -15,7 +15,8 @@ configuration list associated with a microarray experiment.}
 level of probes.}
 }
 \value{
-A summary of all the data in the expression set for each condition.
+A summary of all the data in the expression set for each group
+comparison.
 \describe{
    \item{top.tables}{A list of genes, associated log-fold changes, and
    other statistical values of interest.}
@@ -46,9 +47,9 @@ Batch effects are adjusted using Surrogate Variable Analysis (SVA) and
 gene-level summarization is assessed using the empirical Bayes function from
 the \code{limma} package. If the package \code{GOstats} is installed, Gene
 Ontology (GO) term enrichment is performed to determine biologically relevant
-terms in each condition. Similarly, if the \code{ReactomePA} package is
-installed, pathway analysis is performed using the Reactome database to
-determine which biological pathways are involved in each condition.
+terms in each group comparison. Similarly, if the \code{ReactomePA} package
+is installed, pathway analysis is performed using the Reactome database to
+determine which biological pathways are involved in each group comparison.
 }
 \references{
 Benjamini, Yoav, and Yosef Hochberg. "Controlling the false

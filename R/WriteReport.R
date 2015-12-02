@@ -14,7 +14,7 @@
 #' level of probes.
 #'
 #' @param results A summary of all the data in the expression set for each
-#' condition generated using the \code{ma.summarize} function.
+#' group comparison generated using the \code{ma.summarize} function.
 #'
 #' @importFrom rmarkdown render
 #'

@@ -12,9 +12,9 @@
 #' gene-level summarization is assessed using the empirical Bayes function from
 #' the \code{limma} package. If the package \code{GOstats} is installed, Gene
 #' Ontology (GO) term enrichment is performed to determine biologically relevant
-#' terms in each condition. Similarly, if the \code{ReactomePA} package is
-#' installed, pathway analysis is performed using the Reactome database to
-#' determine which biological pathways are involved in each condition.
+#' terms in each group comparison. Similarly, if the \code{ReactomePA} package
+#' is installed, pathway analysis is performed using the Reactome database to
+#' determine which biological pathways are involved in each group comparison.
 #'
 #' @param config Character string consisting of the path to the configuration
 #' file generated using the \code{write.yaml.config} function or parsed
@@ -23,7 +23,8 @@
 #' @param eset Expression set object describing microarray experiment at the
 #' level of probes.
 #'
-#' @return A summary of all the data in the expression set for each condition.
+#' @return A summary of all the data in the expression set for each group
+#' comparison.
 #' \describe{
 #'    \item{top.tables}{A list of genes, associated log-fold changes, and
 #'    other statistical values of interest.}
