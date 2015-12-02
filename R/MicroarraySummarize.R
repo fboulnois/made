@@ -195,10 +195,10 @@ ma.summarize <- function(config, eset)
   class(allModels) <- "MadeSummary"
 
   # Save output to file
+  analysisDir <- dirname(config$groups$group_file)
+  .write.table.list(allModels$top.tables, analysisDir, prefix = "genes-")
   if(config$global_options$save_intermediates)
   {
-    analysisDir <- dirname(config$groups$group_file)
-    .write.table.list(allModels$top.tables, analysisDir, prefix = "genes-")
     saveRDS(allModels, file.path(analysisDir, "limmaModels.rds"))
   }
 
